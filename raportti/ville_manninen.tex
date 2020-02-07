@@ -4,15 +4,22 @@
 \usepackage[T1]{fontenc}
 \usepackage[finnish]{babel}
 
+\usepackage{graphicx}
+\usepackage{epstopdf}
+
 \begin{document}
 \title{Tietokantojen perusteet, kevät 2020 \\
 Harjoitustyön raportti}
 \author{Ville Manninen \\014922187 \\Macville}
 \date{\today}
 \cleapage\maketitle
+\begin{center}
+\vspace{2cm}
+\includegraphics{university-of-helsinki-2.eps} 
+\end{center}
 \thispagestyle{empty}
 
-
+\newpage
 \tableofcontents
 \newpage
 \section{Esittely}
@@ -34,12 +41,19 @@ Harjoitustyö on toteutettu käyttämällä NetBeans ympäristöä hyödyntäen 
 
 \newpage
 \section{Tietokannan eheys}
+Tietokantaan ei ole mahdollista luoda samannimisiä asiakkaita tai paikkoja, eikä tietokantaan luoduilla paketeilla saa antaa samaa seurantakoodia. Samannimisiä syötteitä valvotaan SQliten toiminnolla UNIQUE, jonka avulla voidaan varmistaa että tietokantaan ei lisätä samannimisiä arvoja.
+
+Java sovellus myös varmistaa myös ettei sille annetut syötteet ole tyhjiä. Sovellus varmistaa myös että lisättäessä pakettia tai tapahtumaa, tietokannasta löytyvät niille annetut arvot suorittamalla kyselyn annetuilla arvoilla.
+
+
 
 
 
 \newpage
 \section{Lähdekoodi}
-Lähdekoodin GitHub repositorio \left \textbf{https://github.com/Viltska/sql-app-training} \right
+\subsection*{GitHub}
+\left \textbf{https://github.com/Viltska/sql-app-training} \right
+\subsection*{Koodi}
 
 
 \newpage

@@ -26,15 +26,22 @@ public class Paikat {
     }
 
     public int getPaikkaID(String paikka) throws SQLException {
-        int id = -1;
         try {
-            ResultSet r = s.executeQuery("SELECT id FROM Asiakkaat WHERER nimi = '" + paikka + "'");
-            id = r.getInt("id");
+            PreparedStatement p = db.prepareStatement("SELECT id FROM Asiakkaat WHERE nimi=?");
+            p.setString(1, paikka);
 
+            ResultSet r = p.executeQuery();
+
+            if (r.next()) {
+                return r.getInt("id");
+
+            } else {
+                return -1;
+            }
         } catch (SQLException e) {
             System.out.println(e);
-
         }
-        return id;
+        return -1;
+
     }
 }

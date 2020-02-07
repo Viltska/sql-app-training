@@ -7,25 +7,24 @@ public class Asiakkaat {
     private final Connection db;
     private final Statement s;
 
-    public Asiakkaat(String connection) throws SQLException {
-
-        this.db = DriverManager.getConnection(connection);
+    public Asiakkaat(Connection db) throws SQLException {
+        this.db = db;
         this.s = db.createStatement();
     }
 
     public void uusiAsiakas(String nimi) throws SQLException {
-        try {
-            s.execute("INSERT INTO Asiakkaat (nimi) VALUES ('" + nimi + "')");
-            System.out.println("Asiakas lisätty");
+        if (!nimi.isEmpty()) {
+            try {
+                s.execute("INSERT INTO Asiakkaat (nimi) VALUES ('" + nimi + "')");
+                System.out.println(nimi + " lisätty");
 
-        } catch (SQLException e) {
-            System.out.println(e);
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
         }
-
     }
 
     public int getID(String asiakas) throws SQLException {
-        int palaute;
         try {
             PreparedStatement p = db.prepareStatement("SELECT id FROM Asiakkaat WHERE nimi=?");
             p.setString(1, asiakas);
@@ -33,8 +32,8 @@ public class Asiakkaat {
             ResultSet r = p.executeQuery();
 
             if (r.next()) {
-                 palaute = r.getInt("id");
-                 return palaute;
+                return r.getInt("id");
+
             } else {
                 return -1;
             }
@@ -44,6 +43,5 @@ public class Asiakkaat {
         return -1;
 
     }
-
 
 }

@@ -7,13 +7,13 @@ public class Main {
 
     public static void main(String[] args) throws SQLException {
         Scanner lukija = new Scanner(System.in);
-        String database = "testi.db";
-        System.out.println("Current database = " + database);
+        String databaseName = "testi.db";
+        System.out.println("Current database: " + databaseName);
 
-        DatabaseManager manager = new DatabaseManager(database);
+        DatabaseManager manager = new DatabaseManager(databaseName);
         manager.createTables();
-        System.out.println("");
 
+        System.out.println("");
         System.out.println("Komennot:");
         System.out.println("");
         System.out.println("1: Lisää asiakas ");
@@ -52,12 +52,11 @@ public class Main {
                 System.out.println("");
                 System.out.print("Seurantakoodi: ");
                 String koodi = lukija.nextLine();
-                
+
                 manager.uusiPaketti(asiakas, koodi);
                 System.out.println("");
             }
 
-           
             if (komento.equals("5")) {
                 System.out.print("Asiakkaan nimi:");
                 String asiakas = lukija.nextLine();

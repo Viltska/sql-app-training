@@ -15,12 +15,14 @@ public class Main {
         System.out.println("");
 
         System.out.println("Komennot:");
+        System.out.println("");
         System.out.println("1: Lisää asiakas ");
         System.out.println("2: Lisää paikka ");
         System.out.println("3: Lisää paketti");
         System.out.println("4: Tulosta taulukot");
         System.out.println("5: Hae asiakkaan ID");
         System.out.println("0: Lopettaa ohjelman");
+        System.out.println("");
 
         while (true) {
             System.out.print("Anna komento: ");
@@ -33,14 +35,14 @@ public class Main {
                 System.out.print("Anna nimi: ");
                 String nimi = lukija.nextLine();
                 manager.uusiAsiakas(nimi);
-                System.out.println("---");
+                System.out.println("");
 
             }
             if (komento.equals("2")) {
                 System.out.print("Paikan nimi: ");
                 String paikka = lukija.nextLine();
                 manager.uusiPaikka(paikka);
-                System.out.println("----");
+                System.out.println("");
 
             }
 
@@ -50,15 +52,12 @@ public class Main {
                 System.out.println("");
                 System.out.print("Seurantakoodi: ");
                 String koodi = lukija.nextLine();
-
+                
                 manager.uusiPaketti(asiakas, koodi);
-                System.out.println("---");
+                System.out.println("");
             }
 
-            if (komento.equals("4")) {
-                manager.printTable("Asiakkaat");
-
-            }
+           
             if (komento.equals("5")) {
                 System.out.print("Asiakkaan nimi:");
                 String asiakas = lukija.nextLine();

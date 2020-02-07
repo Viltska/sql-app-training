@@ -1,4 +1,3 @@
-
 package Tikape;
 
 import java.sql.*;
@@ -15,15 +14,7 @@ public class Paketit {
 
     }
 
-    public void uusiPaketti(Integer asiakasID, String seurantaKoodi) throws SQLException {
-        System.out.println("UUSI PAKETTI: " + seurantaKoodi + " Asiakas ID:" + asiakasID);
-
-        try {
-            s.execute("INSERT INTO Paketit (asiakas_id, koodi) VALUES (" + asiakasID + ", '" + seurantaKoodi + "'");
-
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
+    public void uusiPaketti(String asiakas, String seurantaKoodi) throws SQLException {
 
     }
 

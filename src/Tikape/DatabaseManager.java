@@ -31,23 +31,12 @@ public class DatabaseManager {
     }
 
     public void uusiPaketti(String asiakas, String koodi) throws SQLException {
-        int id = asiakkaat.getAsiakasID(asiakas);
-        if (id != -1) {
-            paketit.uusiPaketti(id, koodi);
-        }
+        paketit.uusiPaketti(asiakas, koodi);
+
     }
+
     public int haeAsiakkaanID(String nimi) throws SQLException {
-        return asiakkaat.getAsiakasID(nimi);
-    }
-
-    public String haeAsiakkaanNimi(int id) throws SQLException {
-        return asiakkaat.getAsiakasNimi(id);
-    }
-
-    public void printTable(String name) throws SQLException {
-        if (name.equals("Asiakkaat")) {
-            asiakkaat.printAll();
-        }
+        return asiakkaat.getID(nimi);
     }
 
     public void createTables() throws SQLException {

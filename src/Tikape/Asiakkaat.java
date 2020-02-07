@@ -16,7 +16,7 @@ public class Asiakkaat {
     public void uusiAsiakas(String nimi) throws SQLException {
         try {
             s.execute("INSERT INTO Asiakkaat (nimi) VALUES ('" + nimi + "')");
-            System.out.println("UUSI ASIAKAS: " + nimi);
+            System.out.println("Asiakas lisätty");
 
         } catch (SQLException e) {
             System.out.println(e);
@@ -24,46 +24,26 @@ public class Asiakkaat {
 
     }
 
-    public void printAll() throws SQLException {
+    public int getID(String asiakas) throws SQLException {
+        int palaute;
         try {
-            ResultSet r = s.executeQuery("SELECT * FROM Asiakkaat");
-            while (r.next()) {
-                System.out.println(r.getInt("id") + " " + r.getString("nimi"));
+            PreparedStatement p = db.prepareStatement("SELECT id FROM Asiakkaat WHERE nimi=?");
+            p.setString(1, asiakas);
+
+            ResultSet r = p.executeQuery();
+
+            if (r.next()) {
+                 palaute = r.getInt("id");
+                 return palaute;
+            } else {
+                return -1;
             }
         } catch (SQLException e) {
             System.out.println(e);
-        }
-    }
-
-    public int getAsiakasID(String asiakas) throws SQLException {
-        String sql = ("SELECT id FROM Asiakkaat WHERE nimi = '" + asiakas + "'");
-
-
-        PreparedStatement p = db.prepareStatement(sql);
-        p.setString(1, asiakas);
-
-        ResultSet r = p.executeQuery();
-        if (r.next()) {
-            int id = r.getInt("id");
-            return id;
-        } else {
-            System.out.println("Tuotetta ei löytynyt");
         }
         return -1;
 
     }
 
-    public String getAsiakasNimi(int id) throws SQLException {
-
-        PreparedStatement p = db.prepareStatement("SELECT hinta FROM Tuotteet WHERE nimi=?");
-
-        ResultSet r = p.executeQuery();
-        if (r.next()) {
-            System.out.println("Hinta: " + r.getInt("hinta"));
-        } else {
-            System.out.println("Tuotetta ei löytynyt");
-        }
-        return "";
-    }
 
 }

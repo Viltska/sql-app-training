@@ -14,9 +14,10 @@ public class Paikat {
 
     }
     public void uusiPaikka(String nimi) throws SQLException {
-        System.out.println("UUSI PAIKKA " + nimi);
+        
         try {
             s.execute("INSERT INTO Paikat (nimi) VALUES ('" + nimi + "')");
+            System.out.println("Paikka lisätty");
 
         } catch (SQLException e) {
             System.out.println(e);

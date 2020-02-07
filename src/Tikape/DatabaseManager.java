@@ -9,6 +9,7 @@ public class DatabaseManager {
     private final Asiakkaat asiakkaat;
     private final Paikat paikat;
     private final Paketit paketit;
+    private final Tapahtumat tapahtumat;
 // SQL 
     private final String databaseName;
     private final String connection;
@@ -22,6 +23,7 @@ public class DatabaseManager {
         this.asiakkaat = new Asiakkaat(this.db);
         this.paikat = new Paikat(this.db);
         this.paketit = new Paketit(this.db);
+        this.tapahtumat = new Tapahtumat(db);
 
     }
 
@@ -65,6 +67,12 @@ public class DatabaseManager {
         }
         try {
             s.execute("CREATE TABLE Paketit (id INTEGER PRIMARY KEY, asiakas_id INTEGER, koodi TEXT UNIQUE)");
+
+        } catch (SQLException e) {
+            System.out.println("Löytyi taulukko 'Paketit'");
+        }
+        try {
+            s.execute("CREATE TABLE Tapahtumat (id INTEGER PRIMARY KEY, paikka_id INTEGER NOT NULL, koodi TEXT NOT NULL, date DATE NOT NULL, kuvaus TEXT NOT NULL)");
 
         } catch (SQLException e) {
             System.out.println("Löytyi taulukko 'Paketit'");

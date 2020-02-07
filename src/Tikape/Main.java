@@ -11,7 +11,9 @@ public class Main {
         System.out.println("Current database: " + databaseName);
 
         DatabaseManager manager = new DatabaseManager(databaseName);
-        manager.createTables();
+        
+        // Komennolla manager.createTables(); voidaan luoda taulukos jos ne puuttuvat
+        // manager.createTables();
 
         System.out.println("");
         System.out.println("Komennot:");
@@ -21,6 +23,7 @@ public class Main {
         System.out.println("3: Lisää paketti");
         System.out.println("4: Tulosta taulukot");
         System.out.println("5: Hae asiakkaan ID");
+        System.out.println("8: Luo taulukot");
         System.out.println("0: Lopettaa ohjelman");
         System.out.println("");
 
@@ -62,6 +65,10 @@ public class Main {
                 String asiakas = lukija.nextLine();
                 System.out.println(manager.haeAsiakkaanID(asiakas));
 
+            }
+            if (komento.equals("8")) {
+                System.out.println("Luodaan taulukot");
+                manager.createTables();
             }
         }
     }

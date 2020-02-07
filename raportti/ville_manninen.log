@@ -1,12 +1,12 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2020.1.21)  7 FEB 2020 17:14
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2020.1.21)  7 FEB 2020 17:52
 entering extended mode
 **./ville_manninen.tex
 (ville_manninen.tex
 LaTeX2e <2019-10-01> patch level 3
 ("C:\Program Files\MiKTeX 2.9\tex/latex/base\article.cls"
 Document Class: article 2019/10/25 v1.4k Standard LaTeX document class
-("C:\Program Files\MiKTeX 2.9\tex/latex/base\size10.clo"
-File: size10.clo 2019/10/25 v1.4k Standard LaTeX file (size option)
+("C:\Program Files\MiKTeX 2.9\tex/latex/base\size12.clo"
+File: size12.clo 2019/10/25 v1.4k Standard LaTeX file (size option)
 )
 \c@part=\count80
 \c@section=\count81
@@ -114,9 +114,17 @@ LaTeX Font Info:    Trying to load font information for T1+lmr on input line 7.
  ("C:\Program Files\MiKTeX 2.9\tex/latex/lm\t1lmr.fd"
 File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
+! Undefined control sequence.
+l.12 \cleapage
+              \maketitle
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
 LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 1
 2.
-
 ("C:\Program Files\MiKTeX 2.9\tex/latex/lm\ot1lmr.fd"
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
@@ -139,31 +147,96 @@ LaTeX Font Info:    Trying to load font information for OMX+lmex on input line
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 12.
+(Font)              <14.4> on input line 12.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 12.
+(Font)              <10> on input line 12.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 12.
- [1
+(Font)              <7> on input line 12.
+ (ville_manninen.toc)
+\tf@toc=\write3
+\openout3 = `ville_manninen.toc'.
 
-{C:/Users/Ville Manninen/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}] (v
-ille_manninen.aux) ) 
+
+[1
+
+{C:/Users/Ville Manninen/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
+LaTeX Font Info:    Trying to load font information for OMS+lmr on input line 2
+1.
+
+("C:\Program Files\MiKTeX 2.9\tex/latex/lm\omslmr.fd"
+File: omslmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
+LaTeX Font Info:    Font shape `OMS/lmr/m/n' in size <12> not available
+(Font)              Font shape `OMS/lmsy/m/n' tried instead on input line 21.
+ [2] [3] [4] [5]
+! Missing $ inserted.
+<inserted text> 
+                $
+l.42 LÃ¤hdekoodin GitHub repositorio \left
+                                           \textbf{https://github.com/Viltsk...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <12> on input line 42.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <8> on input line 42.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <6> on input line 42.
+! Missing delimiter (. inserted).
+<to be read again> 
+                   {
+l.42 ...tps://github.com/Viltska/sql-app-training}
+                                                   \right
+I was expecting to see something like `(' or `\{' or
+`\}' here. If you typed, e.g., `{' instead of `\{', you
+should probably delete the `{' by typing `1' now, so that
+braces don't get unbalanced. Otherwise just proceed.
+Acceptable delimiters are characters whose \delcode is
+nonnegative, or you can use `\delimiter <delimiter code>'.
+
+! Missing delimiter (. inserted).
+<to be read again> 
+                   \par 
+l.43 
+     
+I was expecting to see something like `(' or `\{' or
+`\}' here. If you typed, e.g., `{' instead of `\{', you
+should probably delete the `{' by typing `1' now, so that
+braces don't get unbalanced. Otherwise just proceed.
+Acceptable delimiters are characters whose \delcode is
+nonnegative, or you can use `\delimiter <delimiter code>'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.43 
+     
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+Overfull \hbox (41.93414pt too wide) in paragraph at lines 42--43
+\T1/lmr/m/n/12 Lähdekoodin Git-Hub re-po-si-to-rio $[]$ 
+ []
+
+[6] (ville_manninen.aux) ) 
 Here is how much of TeX's memory you used:
- 1215 strings out of 492482
- 16300 string characters out of 3130996
- 86100 words of memory out of 3000000
- 5584 multiletter control sequences out of 15000+200000
- 33427 words of font info for 31 fonts, out of 3000000 for 9000
+ 1256 strings out of 492482
+ 16953 string characters out of 3130996
+ 86121 words of memory out of 3000000
+ 5614 multiletter control sequences out of 15000+200000
+ 47563 words of font info for 42 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 25i,6n,27p,172b,200s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-ec.enc}<
-C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmbx12.pfb><C:/Program Files/
-MiKTeX 2.9/fonts/type1/public/lm/lmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/t
-ype1/public/lm/lmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmr
-17.pfb>
-Output written on ville_manninen.pdf (1 page, 103261 bytes).
+ 25i,6n,27p,259b,200s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-ma
+thsy.enc}{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-ec.enc}<C:/Program 
+Files/MiKTeX 2.9/fonts/type1/public/lm/lmbx12.pfb><C:/Program Files/MiKTeX 2.9/
+fonts/type1/public/lm/lmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public
+/lm/lmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmsy10.pfb>
+Output written on ville_manninen.pdf (6 pages, 92109 bytes).
 PDF statistics:
- 23 PDF objects out of 1000 (max. 8388607)
+ 39 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

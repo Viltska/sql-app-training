@@ -1,0 +1,6 @@
+\babel@toc {finnish}{}
+\contentsline {section}{\numberline {1}Esittely}{2}%
+\contentsline {section}{\numberline {2}Tietokantakaavio ja SQL-skeema}{3}%
+\contentsline {section}{\numberline {3}Tehokkuustesti}{4}%
+\contentsline {section}{\numberline {4}Tietokannan eheys}{5}%
+\contentsline {section}{\numberline {5}Lähdekoodi}{6}%

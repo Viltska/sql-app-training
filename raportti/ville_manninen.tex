@@ -41,9 +41,9 @@ Harjoitustyö on toteutettu käyttämällä NetBeans ympäristöä hyödyntäen 
 
 \newpage
 \section{Tietokannan eheys}
-Tietokantaan ei ole mahdollista luoda samannimisiä asiakkaita tai paikkoja, eikä tietokantaan luoduilla paketeilla saa antaa samaa seurantakoodia. Samannimisiä syötteitä valvotaan SQliten toiminnolla UNIQUE, jonka avulla voidaan varmistaa että tietokantaan ei lisätä samannimisiä arvoja.
+Tietokantaan ei ole mahdollista luoda samannimisiä asiakkaita tai paikkoja, eikä tietokantaan luoduilla paketeilla saa antaa samaa seurantakoodia. Samannimisiä syötteitä valvotaan SQliten toiminnolla UNIQUE, jonka avulla voidaan varmistaa että tietokantaan ei lisätä samannimisiä arvoja. Java sovellus varmistaa ettei sille annetut syötteet ole tyhjiä, joten tietokantaan ei tallenneta NULL arvoja.
 
-Java sovellus myös varmistaa myös ettei sille annetut syötteet ole tyhjiä. Sovellus varmistaa myös että lisättäessä pakettia tai tapahtumaa, tietokannasta löytyvät niille annetut arvot suorittamalla kyselyn annetuilla arvoilla.
+Tietokantaan lisättäessä paketteja tai tapahtumia, jotka saavat arvokseen viiteavaimia, sovellus suorittaa kyselyn joka varmistaa että annetut viiteavaimet löytyvät tietokannasta.
 
 
 

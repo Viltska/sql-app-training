@@ -28,21 +28,33 @@ public class DatabaseManager {
     }
 
     public void uusiAsiakas(String nimi) throws SQLException {
-        this.asiakkaat.uusiAsiakas(nimi);
+        if (!nimi.isEmpty()) {
+            this.asiakkaat.uusiAsiakas(nimi);
+        } else {
+            System.out.println("Asiakkaan nimi ei saa olla tyhjä");
+        }
     }
 
     public void uusiPaikka(String nimi) throws SQLException {
-        this.paikat.uusiPaikka(nimi);
+        if (!nimi.isEmpty()) {
+            this.paikat.uusiPaikka(nimi);
+        } else {
+            System.out.println("Paikannimi ei saa olla tyhjä");
+        }
     }
 
     public void uusiPaketti(String asiakas, String koodi) throws SQLException {
-        //Haetaan asiakas_id nimen perusteella
-        int asiakas_id = asiakkaat.getID(asiakas);
-        //Jos nimeä ei löydy palautetaan arvo -1
-        if (asiakas_id != -1) {
-            paketit.uusiPaketti(asiakas_id, koodi);
+        if (!asiakas.isEmpty() && !koodi.isEmpty()) {
+            // .getID(asiakas) hakee SQL tietokannasta asiakkaan id, jos asiakasta ei löydy palautetaan arvo -1
+
+            int asiakas_id = asiakkaat.getID(asiakas);
+            if (asiakas_id != -1) {
+                paketit.uusiPaketti(asiakas_id, koodi);
+            } else {
+                System.out.println("Asiakasta ei löytynyt");
+            }
         } else {
-            System.out.println("Asiakasta ei löytynyt");
+            System.out.println("Asiakkaan nimi tai seurantakoodi eivät saa olla tyhiä");
         }
 
     }
@@ -61,7 +73,7 @@ public class DatabaseManager {
                 System.out.println("Paikkaa ei löytynyt");
             }
         } else {
-            System.out.println("Syöte ei saa olla tyhjä");
+            System.out.println("Syöteet eivät saa olla tyhjä");
         }
 
     }
@@ -100,6 +112,7 @@ public class DatabaseManager {
         } catch (SQLException e) {
             System.out.println("Löytyi taulukko 'Tapahtumat'");
         }
+        System.out.println("Tietokanta valmis");
 
     }
 

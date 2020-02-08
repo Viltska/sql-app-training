@@ -18,7 +18,7 @@ public class Main {
         System.out.println("2: Lisää paikka ");
         System.out.println("3: Lisää paketti");
         System.out.println("4: Lisää tapahtuma");
-        System.out.println("8: Luo taulukot");
+        System.out.println("8: Luo tietokannan ja/tai puuttuvat taulukot");
         System.out.println("0: Lopettaa ohjelman");
         
 
@@ -62,7 +62,7 @@ public class Main {
             }
 
             if (komento.equals("8")) {
-                System.out.println("Luodaan taulukot");
+                System.out.println("Tarkistetaan tietokantaa..");
                 manager.createTables();
             }
         }

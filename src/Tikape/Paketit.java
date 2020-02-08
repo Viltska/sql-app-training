@@ -19,7 +19,6 @@ public class Paketit {
             p.setString(2, seurantaKoodi);
             p.executeUpdate();
             System.out.println("Paketti lisätty");
-            
         } catch (SQLException e) {
             System.out.println(e);
         }

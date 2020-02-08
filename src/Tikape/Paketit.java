@@ -14,7 +14,7 @@ public class Paketit {
 
     public void uusiPaketti(int asiakas_id, String seurantaKoodi) throws SQLException {
         try {
-            PreparedStatement p = db.prepareStatement("INSERT INTO Paketit (asiakas_id,koodi) VALUES (?,?)");
+            PreparedStatement p = db.prepareStatement("INSERT INTO Paketit (asiakas_id,seurantakoodi) VALUES (?,?)");
             p.setInt(1, asiakas_id);
             p.setString(2, seurantaKoodi);
             p.executeUpdate();
@@ -26,7 +26,7 @@ public class Paketit {
 
     public int getID(String seurantaKoodi) throws SQLException {
         try {
-            PreparedStatement p = db.prepareStatement("SELECT id FROM Paketit WHERE koodi=?");
+            PreparedStatement p = db.prepareStatement("SELECT id FROM Paketit WHERE seurantakoodi=?");
             p.setString(1, seurantaKoodi);
 
             ResultSet r = p.executeQuery();
@@ -46,15 +46,18 @@ public class Paketit {
 
     public void haePaketinTapahtumat(int paketti_id) throws SQLException {
         try {
-            PreparedStatement p = db.prepareStatement("SELECT nimi, kuvaus, datetime FROM Tapahtumat LEFT JOIN Paikat ON Tapahtumat.paikka_id = Paikat.id LEFT JOIN Paketit ON Tapahtumat.paketti_id = Paketit.id WHERE paketti_id = ?");
+            PreparedStatement p = db.prepareStatement("SELECT paikannimi,kuvaus, seurantakoodi, date FROM Tapahtumat, Paikat, Paketit WHERE Tapahtumat.paikka_id = Paikat.id AND Tapahtumat.paketti_id = Paketit.id AND Paketit.id = ?");
             p.setInt(1, paketti_id);
             ResultSet r = p.executeQuery();
-            System.out.println("Haetaan tapahtumia..");
-            if (!r.next()) {
-                System.out.println("Ei tapahtumia.");
-            }
+            System.out.println("Paketin tapahtumat: ");
+
             while (r.next()) {
-                System.out.println("Tapahtuma: " + r.getString("nimi") + " / " + r.getString("kuvaus") + " / " + r.getString("datetime"));
+                System.out.println("----------------------");
+                System.out.println("TAPAHTUMA (" + r.getString("date") + ")");
+                System.out.println("Sijainti: " + r.getString("paikannimi"));
+                System.out.println("Kuvaus: " + r.getString("kuvaus"));
+                System.out.println("----------------------");
+                System.out.println("");
             }
 
         } catch (SQLException e) {

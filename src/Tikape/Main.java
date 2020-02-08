@@ -65,6 +65,10 @@ public class Main {
                 String seurantaKoodi = lukija.nextLine();
                 manager.haePaketinTapahtumat(seurantaKoodi);
             }
+            if (komento.equals("6")) {
+                System.out.println("haku testi");
+                manager.haePaketinTapahtumat("123");
+            }
 
             if (komento.equals("8")) {
                 System.out.println("Tarkistetaan tietokantaa..");

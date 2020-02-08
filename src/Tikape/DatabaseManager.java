@@ -104,21 +104,21 @@ public class DatabaseManager {
             System.out.println("Löytyi taulukko 'Asiakkaat'");
         }
         try {
-            s.execute("CREATE TABLE Paikat (id INTEGER PRIMARY KEY, nimi TEXT UNIQUE)");
+            s.execute("CREATE TABLE Paikat (id INTEGER PRIMARY KEY, paikannimi TEXT UNIQUE)");
             System.out.println("Luotu taulukko 'Paikat'");
 
         } catch (SQLException e) {
             System.out.println("Löytyi taulukko 'Paikat'");
         }
         try {
-            s.execute("CREATE TABLE Paketit (id INTEGER PRIMARY KEY, asiakas_id INTEGER, koodi TEXT UNIQUE)");
+            s.execute("CREATE TABLE Paketit (id INTEGER PRIMARY KEY, asiakas_id INTEGER, seurantakoodi TEXT UNIQUE)");
             System.out.println("Luotu taulukko 'Paketit'");
 
         } catch (SQLException e) {
             System.out.println("Löytyi taulukko 'Paketit'");
         }
         try {
-            s.execute("CREATE TABLE Tapahtumat (id INTEGER PRIMARY KEY, paikka_id INTEGER, paketti_id INTEGER, datetime DATETIME NOT NULL, kuvaus TEXT NOT NULL)");
+            s.execute("CREATE TABLE Tapahtumat (id INTEGER PRIMARY KEY, paikka_id INTEGER, paketti_id INTEGER, date DATE, kuvaus TEXT NOT NULL)");
             System.out.println("Luotu taulukko 'Tapahtumat'");
 
         } catch (SQLException e) {

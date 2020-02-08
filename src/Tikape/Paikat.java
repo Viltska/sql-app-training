@@ -16,7 +16,7 @@ public class Paikat {
     public void uusiPaikka(String nimi) throws SQLException {
 
         try {
-            PreparedStatement p = db.prepareStatement("INSERT INTO Paikat (nimi) VALUES (?)");
+            PreparedStatement p = db.prepareStatement("INSERT INTO Paikat (paikannimi) VALUES (?)");
             p.setString(1, nimi);
             p.executeUpdate();
             System.out.println("Paikka lisätty");
@@ -27,7 +27,7 @@ public class Paikat {
 
     public int getPaikkaID(String paikka) throws SQLException {
         try {
-            PreparedStatement p = db.prepareStatement("SELECT id FROM Paikat WHERE nimi=?");
+            PreparedStatement p = db.prepareStatement("SELECT id FROM Paikat WHERE paikannimi=?");
             p.setString(1, paikka);
 
             ResultSet r = p.executeQuery();

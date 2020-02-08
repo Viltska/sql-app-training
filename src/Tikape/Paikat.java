@@ -5,11 +5,9 @@ import java.sql.*;
 public class Paikat {
 
     private final Connection db;
-    private final Statement s;
 
     public Paikat(Connection db) throws SQLException {
         this.db = db;
-        this.s = db.createStatement();
 
     }
 

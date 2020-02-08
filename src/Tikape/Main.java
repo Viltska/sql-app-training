@@ -26,7 +26,7 @@ public class Main {
             System.out.print("Syötä komento: ");
             String komento = lukija.nextLine();
             if (komento.equals("0")) {
-                System.out.println("Kiitos ja näkemiin.");
+                System.out.println("Ohjelma suljetaan.");
                 break;
             }
             if (komento.equals("1")) {
@@ -70,13 +70,19 @@ public class Main {
                 manager.haePaketinTapahtumat("123");
             }
 
-            if (komento.equals("8")) {
+            if (komento.equals("9")) {
                 System.out.println("Tarkistetaan tietokantaa..");
                 manager.createTables();
             }
             // Tikape fun
             if (komento.equals("11")) {
-                manager.tikapePrint();
+                System.out.print("Oletko tosikko? (Y/N): ");
+                String vastaus = lukija.nextLine();
+                if (vastaus.equalsIgnoreCase("N")) {
+                    manager.tikapePrint();
+                }
+                System.out.println("Ohjelma suljetaan.");
+                break;
             }
         }
     }

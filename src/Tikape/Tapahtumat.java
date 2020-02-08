@@ -13,15 +13,15 @@ public class Tapahtumat {
 
     }
 
-    public void uusiTapahtuma(int paikka_id, String paketinKoodi, String kuvaus) throws SQLException {
+    public void uusiTapahtuma(int paikka_id, int paketti_id, String kuvaus) throws SQLException {
         try {
-            PreparedStatement p = db.prepareStatement("INSERT INTO Tapahtumat (paikka_id,koodi,datetime,kuvaus) VALUES (?,?,?,?)");
+            PreparedStatement p = db.prepareStatement("INSERT INTO Tapahtumat (paikka_id,paketti_id,datetime,kuvaus) VALUES (?,?,?,?)");
             p.setInt(1, paikka_id);
-            p.setString(2, paketinKoodi);
+            p.setInt(2, paketti_id);
             p.setString(3, "datetime");
             p.setString(4, kuvaus);
             p.executeUpdate();
-            System.out.println("Asiakas lisätty");
+            System.out.println("Tapahtuma lisätty");
         } catch (SQLException e) {
             System.out.println(e);
         }

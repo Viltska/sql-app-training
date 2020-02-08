@@ -11,16 +11,16 @@ public class Main {
         System.out.println("Current database: " + databaseName);
 
         DatabaseManager manager = new DatabaseManager(databaseName);
-   
+
         System.out.println("Komennot:");
         System.out.println("");
         System.out.println("1: Lisää asiakas ");
         System.out.println("2: Lisää paikka ");
         System.out.println("3: Lisää paketti");
         System.out.println("4: Lisää tapahtuma");
+        System.out.println("5: Hae paketin tapahtumat");
         System.out.println("8: Luo tietokannan ja/tai puuttuvat taulukot");
         System.out.println("0: Lopettaa ohjelman");
-        
 
         while (true) {
             System.out.print("Syötä komento: ");
@@ -59,6 +59,11 @@ public class Main {
                 String kuvaus = lukija.nextLine();
                 manager.uusiTapahtuma(paikka, seurantaKoodi, kuvaus);
 
+            }
+            if (komento.equals("5")) {
+                System.out.print("Syötä paketin seurantakoodi: ");
+                String seurantaKoodi = lukija.nextLine();
+                manager.haePaketinTapahtumat(seurantaKoodi);
             }
 
             if (komento.equals("8")) {

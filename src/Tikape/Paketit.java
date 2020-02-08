@@ -44,4 +44,23 @@ public class Paketit {
 
     }
 
+    public void haePaketinTapahtumat(int paketti_id) throws SQLException {
+        try {
+            PreparedStatement p = db.prepareStatement("SELECT nimi, kuvaus, datetime FROM Tapahtumat LEFT JOIN Paikat ON Tapahtumat.paikka_id = Paikat.id LEFT JOIN Paketit ON Tapahtumat.paketti_id = Paketit.id WHERE paketti_id = ?");
+            p.setInt(1, paketti_id);
+            ResultSet r = p.executeQuery();
+            System.out.println("Haetaan tapahtumia..");
+            if (!r.next()) {
+                System.out.println("Ei tapahtumia.");
+            }
+            while (r.next()) {
+                System.out.println("Tapahtuma: " + r.getString("nimi") + " / " + r.getString("kuvaus") + " / " + r.getString("datetime"));
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+    }
+
 }

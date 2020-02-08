@@ -30,18 +30,15 @@ Harjoitustyö on toteutettu Java-ohjelmana käyttäen NetBeans ympäristöä, oh
 \item Paikan lisäämien tietokantaan nimellä.
 \item Paketin lisääminen tietokantaan käyttäen asiakkaan nimeä.
 \item Tapahtuman lisääminen tietokantaan käyttäen paikannimeä ja paketin seurantakoodia.
+\item Paketin tapahtumien hakeminen
 
 \end{itemize}
-Ohjelma tarkistaa käyttäjän antamat syötteet ja ilmoittaa syyn jos syöte on puutteellinen.
 
 \newpage
 \section{Kaaviot ja Skeemat}
 \subsection*{Tietokantakaavio}
-Harjoitustyön käyttämällä tietokannalla on seuraavanlainen tietokantakaavio.
-\begin{center}
 
-\includegraphics[width=1\textwidth]{TikapeKaavio.png} 
-\end{center}
+
 \subsection*{SQL-skeema}
 
 \newpage
@@ -51,9 +48,9 @@ Harjoitustyön käyttämällä tietokannalla on seuraavanlainen tietokantakaavio
 
 \newpage
 \section{Tietokannan eheys}
-Tietokantaan ei ole mahdollista luoda samannimisiä asiakkaita tai paikkoja, eikä tietokantaan luoduilla paketeilla saa antaa samaa seurantakoodia. Samannimisiä syötteitä valvotaan SQliten toiminnolla UNIQUE, jonka avulla voidaan varmistaa että tietokantaan ei lisätä samannimisiä arvoja. Java sovellus varmistaa ettei sille annetut syötteet ole tyhjiä, joten tietokantaan ei tallenneta NULL arvoja.
+Tietokantaan ei ole mahdollista luoda samannimisiä asiakkaita tai paikkoja, eikä tietokantaan luoduilla paketeilla saa antaa samaa seurantakoodia. Samannimisiä syötteitä valvotaan SQliten toiminnolla UNIQUE, joka varmistaa että taulukkoon ei lisätä samannimisiä arvoja. 
 
-Tietokantaan lisättäessä paketteja tai tapahtumia, jotka saavat arvokseen viiteavaimia, sovellus suorittaa kyselyn joka varmistaa että annetut viiteavaimet löytyvät tietokannasta.
+Ohjelma tarkistaa käyttäjän antamat syötteet ja ilmoittaa syyn jos syöte on puutteellinen, se tarkistaa myös että sille annetut syötteet eivät ole tyhjiä eikä tietokantaan lisätä NULL arvoja. Tietokantaan lisättäessä paketteja tai tapahtumia jotka viittaavat toisiin taulukoihin, sovellus varmistaa että annetut viitteet löytyvät tietokannasta.
 
 
 

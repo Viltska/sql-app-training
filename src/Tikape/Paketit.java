@@ -25,5 +25,24 @@ public class Paketit {
 
         }
     }
+    public int getID(String seurantaKoodi) throws SQLException {
+        try {
+            PreparedStatement p = db.prepareStatement("SELECT id FROM Paketit WHERE koodi=?");
+            p.setString(1, seurantaKoodi);
+
+            ResultSet r = p.executeQuery();
+
+            if (r.next()) {
+                return r.getInt("id");
+
+            } else {
+                return -1;
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return -1;
+
+    }
 
 }

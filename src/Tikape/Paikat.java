@@ -27,7 +27,7 @@ public class Paikat {
 
     public int getPaikkaID(String paikka) throws SQLException {
         try {
-            PreparedStatement p = db.prepareStatement("SELECT id FROM Asiakkaat WHERE nimi=?");
+            PreparedStatement p = db.prepareStatement("SELECT id FROM Paikat WHERE nimi=?");
             p.setString(1, paikka);
 
             ResultSet r = p.executeQuery();

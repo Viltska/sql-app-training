@@ -28,6 +28,7 @@ public class DatabaseManager {
     }
 
     public void uusiAsiakas(String nimi) throws SQLException {
+        //Tarkistetaan että syöte ei ole tyhjä
         if (!nimi.isEmpty()) {
             this.asiakkaat.uusiAsiakas(nimi);
         } else {
@@ -36,6 +37,7 @@ public class DatabaseManager {
     }
 
     public void uusiPaikka(String nimi) throws SQLException {
+        //Tarkistetaan että syöte ei ole tyhjä
         if (!nimi.isEmpty()) {
             this.paikat.uusiPaikka(nimi);
         } else {
@@ -44,10 +46,13 @@ public class DatabaseManager {
     }
 
     public void uusiPaketti(String asiakas, String koodi) throws SQLException {
-        if (!asiakas.isEmpty() && !koodi.isEmpty()) {
-            // .getID(asiakas) hakee SQL tietokannasta asiakkaan id, jos asiakasta ei löydy palautetaan arvo -1
+        // .getID(asiakas) hakee SQL tietokannasta asiakkaan id, jos asiakasta ei löydy palautetaan arvo -1
 
+        //Tarkistetaan että syötteet eivät ole tyhjä
+        if (!asiakas.isEmpty() && !koodi.isEmpty()) {
             int asiakas_id = asiakkaat.getID(asiakas);
+
+            //Jos asiakasta ei löydy tietokannasta ei pakettia lisätä
             if (asiakas_id != -1) {
                 paketit.uusiPaketti(asiakas_id, koodi);
             } else {
@@ -60,10 +65,11 @@ public class DatabaseManager {
     }
 
     public void uusiTapahtuma(String paikka, String seurantaKoodi, String kuvaus) throws SQLException {
-
+        //Tarkistetaan että syötteet eivät ole tyhjä
         if (!paikka.isEmpty() && !seurantaKoodi.isEmpty() && !kuvaus.isEmpty()) {
             int paikka_id = paikat.getPaikkaID(paikka);
             int paketti_id = paketit.getID(seurantaKoodi);
+            //Tarkistetaan että paikka ja paketti löytyvät tietokannasta
             if (paikka_id != -1) {
                 if (paketti_id != -1) {
                     tapahtumat.uusiTapahtuma(paikka_id, paketti_id, kuvaus);
@@ -81,18 +87,24 @@ public class DatabaseManager {
     }
 
     public void haePaketinTapahtumat(String seurantaKoodi) throws SQLException {
-        int paketti_id = paketit.getID(seurantaKoodi);
-        if (paketti_id != -1) {
-            try {
-                paketit.haePaketinTapahtumat(paketti_id);
-            } catch (SQLException e) {
-                System.out.println(e);
-            }
-        } else {
-            System.out.println("Pakettia ei löytynyt");
-        }
+        //Tarkistetaan että syöte ei ole tyhjä
+        if (!seurantaKoodi.isEmpty()) {
+            int paketti_id = paketit.getID(seurantaKoodi);
 
+            //Tarkistetaan että paketti löytyy tietokannasta
+            if (paketti_id != -1) {
+                try {
+                    paketit.haePaketinTapahtumat(paketti_id);
+                } catch (SQLException e) {
+                    System.out.println(e);
+                }
+            } else {
+                System.out.println("Pakettia ei löytynyt");
+            }
+        }
+        System.out.println("Syöte ei saa olla tyhjä");
     }
+
     //Important
     public void tikapePrint() {
         System.out.println("----------------------------------------------------");

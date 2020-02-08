@@ -13,14 +13,13 @@ public class Asiakkaat {
     }
 
     public void uusiAsiakas(String nimi) throws SQLException {
-        if (!nimi.isEmpty()) {
-            try {
-                s.execute("INSERT INTO Asiakkaat (nimi) VALUES ('" + nimi + "')");
-                System.out.println(nimi + " lisätty");
-
-            } catch (SQLException e) {
-                System.out.println(e);
-            }
+        try {
+            PreparedStatement p = db.prepareStatement("INSERT INTO Asiakkaat (nimi) VALUES (?)");
+            p.setString(1, nimi);
+            p.executeUpdate();
+            System.out.println("Asiakas lisätty");
+        } catch (SQLException e) {
+            System.out.println(e);
         }
     }
 

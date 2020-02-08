@@ -14,14 +14,14 @@ public class Paikat {
     }
 
     public void uusiPaikka(String nimi) throws SQLException {
-        if (!nimi.isEmpty()) {
-            try {
-                s.execute("INSERT INTO Paikat (nimi) VALUES ('" + nimi + "')");
-                System.out.println(nimi + " lisätty");
 
-            } catch (SQLException e) {
-                System.out.println(e);
-            }
+        try {
+            PreparedStatement p = db.prepareStatement("INSERT INTO Paikat (nimi) VALUES (?)");
+            p.setString(1, nimi);
+            p.executeUpdate();
+            System.out.println("Paikka lisätty");
+        } catch (SQLException e) {
+            System.out.println(e);
         }
     }
 

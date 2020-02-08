@@ -13,18 +13,18 @@ public class Paketit {
     }
 
     public void uusiPaketti(int asiakas_id, String seurantaKoodi) throws SQLException {
-        if (!seurantaKoodi.isEmpty()) {
-            try {
-                s.execute("INSERT INTO Paketit (asiakas_id,koodi) VALUES (" + asiakas_id + ",'" + seurantaKoodi + "')");
-                System.out.println("Paketti lisätty (" + asiakas_id + ", " + seurantaKoodi + ")");
-
-            } catch (SQLException e) {
-                //Constraint koodi UNIQUE
-                System.out.println(e);
-            }
-
+        try {
+            PreparedStatement p = db.prepareStatement("INSERT INTO Paketit (asiakas_id,koodi) VALUES (?,?)");
+            p.setInt(1, asiakas_id);
+            p.setString(2, seurantaKoodi);
+            p.executeUpdate();
+            System.out.println("Paketti lisätty");
+            
+        } catch (SQLException e) {
+            System.out.println(e);
         }
     }
+
     public int getID(String seurantaKoodi) throws SQLException {
         try {
             PreparedStatement p = db.prepareStatement("SELECT id FROM Paketit WHERE koodi=?");

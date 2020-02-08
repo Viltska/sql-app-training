@@ -40,14 +40,6 @@ Harjoitustyön käyttämällä tietokannalla on seuraavanlainen tietokantakaavio
 \includegraphics[width=1\textwidth]{TikapeKaavio.png} 
 \end{center}
 \subsection*{SQL-skeema}
-\begin{itemize}
-\item CREATE TABLE Asiakkaat (id INTEGER PRIMARY KEY, nimi TEXT UNIQUE)
-\item CREATE TABLE Paikat (id INTEGER PRIMARY KEY, nimi TEXT UNIQUE)
-\item CREATE TABLE Paketit (id INTEGER PRIMARY KEY, asiakas_id INTEGER, koodi TEXT UNIQUE)
-\item CREATE TABLE Tapahtumat (id INTEGER PRIMARY KEY, paikka_id INTEGER NOT NULL, koodi TEXT NOT NULL, datetime DATETIME NOT NULL, kuvaus TEXT NOT NULL)
-\end{itemize}
-
-
 
 \newpage
 \section{Tehokkuustesti}

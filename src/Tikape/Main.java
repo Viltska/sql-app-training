@@ -74,6 +74,10 @@ public class Main {
                 System.out.println("Tarkistetaan tietokantaa..");
                 manager.createTables();
             }
+            // Tikape fun
+            if (komento.equals("11")) {
+                manager.tikapePrint();
+            }
         }
     }
 }

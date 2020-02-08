@@ -49,7 +49,6 @@ public class Paketit {
             PreparedStatement p = db.prepareStatement("SELECT paikannimi,kuvaus, seurantakoodi, date FROM Tapahtumat, Paikat, Paketit WHERE Tapahtumat.paikka_id = Paikat.id AND Tapahtumat.paketti_id = Paketit.id AND Paketit.id = ?");
             p.setInt(1, paketti_id);
             ResultSet r = p.executeQuery();
-            System.out.println("Paketin tapahtumat: ");
 
             while (r.next()) {
                 System.out.println("----------------------");
@@ -64,6 +63,24 @@ public class Paketit {
             System.out.println(e);
         }
 
+    }
+
+    public int paketinTapahtumienMaara(int paketti_id) throws SQLException {
+
+        try {
+            PreparedStatement p = db.prepareStatement("SELECT COUNT(*) FROM Tapahtumat, Paikat, Paketit WHERE Tapahtumat.paikka_id = Paikat.id AND Tapahtumat.paketti_id = Paketit.id AND Paketit.id = ?");
+            p.setInt(1, paketti_id);
+            ResultSet r = p.executeQuery();
+
+            while (r.next()) {
+                return 0;
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+
+        }
+        return -1;
     }
 
 }

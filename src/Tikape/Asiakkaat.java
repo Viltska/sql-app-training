@@ -42,5 +42,20 @@ public class Asiakkaat {
         return -1;
 
     }
+    public void haeAsiakkaanPaketit(String asiakas) throws SQLException {
+        try {
+            PreparedStatement p = db.prepareStatement("SELECT * FROM Asiakkaat WHERE nimi = ?");
+            p.setString(1, asiakas);
+            ResultSet r = p.executeQuery();
+
+            while (r.next()) {
+                
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        
+    }
 
 }

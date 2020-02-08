@@ -93,6 +93,19 @@ public class DatabaseManager {
         }
 
     }
+    //Important
+    public void tikapePrint() {
+        System.out.println("----------------------------------------------------");
+        System.out.println(" ______  ______   __  __   ______  ____    ____      ");
+        System.out.println("/\\__  _\\/\\__  _\\ /\\ \\/\\ \\ /\\  _  \\/\\  _`\\ /\\  _`\\    ");
+        System.out.println("\\/_/\\ \\/\\/_/\\ \\/ \\ \\ \\/'/'\\ \\ \\L\\ \\ \\ \\L\\ \\ \\ \\L\\_\\  ");
+        System.out.println("   \\ \\ \\   \\ \\ \\  \\ \\ , <  \\ \\  __ \\ \\ ,__/\\ \\  _\\L  ");
+        System.out.println("    \\ \\ \\   \\_\\ \\__\\ \\ \\\\`\\ \\ \\ \\/\\ \\ \\ \\/  \\ \\ \\L\\ \\");
+        System.out.println("     \\ \\_\\  /\\_____\\\\ \\_\\ \\_\\\\ \\_\\ \\_\\ \\_\\   \\ \\____/");
+        System.out.println("      \\/_/  \\/_____/ \\/_/\\/_/ \\/_/\\/_/\\/_/    \\/___/ ");
+        System.out.println("                                                     ");
+        System.out.println("----------------------------------------------------");
+    }
 
     public void createTables() throws SQLException {
         Statement s = db.createStatement();

@@ -23,6 +23,7 @@ public class Paketit {
     }
 
     public int getID(String seurantaKoodi) throws SQLException {
+        // Palauttaa arvon -1 jos pakettia ei löydy tietokannasta
         try {
             PreparedStatement p = db.prepareStatement("SELECT id FROM Paketit WHERE seurantakoodi=?");
             p.setString(1, seurantaKoodi);
@@ -44,17 +45,21 @@ public class Paketit {
 
     public void haePaketinTapahtumat(int paketti_id) throws SQLException {
         try {
-            PreparedStatement p = db.prepareStatement("SELECT paikannimi,kuvaus, seurantakoodi, date FROM Tapahtumat, Paikat, Paketit WHERE Tapahtumat.paikka_id = Paikat.id AND Tapahtumat.paketti_id = Paketit.id AND Paketit.id = ?");
+            PreparedStatement p = db.prepareStatement("SELECT paikannimi,kuvaus, seurantakoodi, date FROM Tapahtumat, Paikat Paketit WHERE Tapahtumat.paikka_id = Paikat.id AND Tapahtumat.paketti_id = Paketit.id AND Paketit.id = ?");
             p.setInt(1, paketti_id);
             ResultSet r = p.executeQuery();
 
-            while (r.next()) {
+            if (r.next() == false) {
+                System.out.println("Paketilla ei ollut tapahtumia");
+            } else {
                 System.out.println("----------------------");
-                System.out.println("TAPAHTUMA (" + r.getString("date") + ")");
-                System.out.println("Sijainti: " + r.getString("paikannimi"));
-                System.out.println("Kuvaus: " + r.getString("kuvaus"));
-                System.out.println("----------------------");
-                System.out.println("");
+                do {
+                    System.out.println("TAPAHTUMA (" + r.getString("date") + ")");
+                    System.out.println("Sijainti: " + r.getString("paikannimi"));
+                    System.out.println("Kuvaus: " + r.getString("kuvaus"));
+                    System.out.println("----------------------");
+                } while (r.next());
+
             }
 
         } catch (SQLException e) {

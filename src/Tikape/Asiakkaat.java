@@ -22,6 +22,7 @@ public class Asiakkaat {
     }
 
     public int getID(String asiakas) throws SQLException {
+        //Palauttaa -1 jos asiakasta ei löydy tietokannasta
         try {
             PreparedStatement p = db.prepareStatement("SELECT id FROM Asiakkaat WHERE nimi=?");
             p.setString(1, asiakas);
@@ -41,16 +42,26 @@ public class Asiakkaat {
 
     }
 
-    public void haeAsiakkaanPaketit(String asiakas) throws SQLException {
+    public void haeAsiakkaanPaketit(int asiakas_id) throws SQLException {
         try {
-            PreparedStatement p = db.prepareStatement("SELECT * FROM Asiakkaat WHERE nimi = ?");
-            p.setString(1, asiakas);
+            PreparedStatement p = db.prepareStatement("SELECT seurantakoodi, COUNT(Tapahtumat.paketti_id) FROM Paketit\n"
+                    + "LEFT JOIN Tapahtumat ON Tapahtumat.paketti_id = Paketit.id\n"
+                    + "LEFT JOIN Asiakkaat ON Asiakkaat.id = Paketit.asiakas_id\n"
+                    + "GROUP BY Paketit.seurantakoodi HAVING Paketit.asiakas_id = ?;");
+            p.setInt(1, asiakas_id);
             ResultSet r = p.executeQuery();
 
-            while (r.next()) {
-
+            if (r.next() == false) {
+                System.out.println("Asiakkaalla ei ollut paketteja");
+            } else {
+                System.out.println("Asiakkaan paketit");
+                System.out.println("-------------");
+                do {
+                    System.out.println("Paketti (" + r.getString("seurantakoodi") + ")");
+                    System.out.println("Tapahtumia(" + r.getString("COUNT(Tapahtumat.paketti_id)") + ")");
+                    System.out.println("-------------");
+                } while (r.next());
             }
-
         } catch (SQLException e) {
             System.out.println(e);
         }

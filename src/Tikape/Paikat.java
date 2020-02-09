@@ -24,6 +24,7 @@ public class Paikat {
     }
 
     public int getPaikkaID(String paikka) throws SQLException {
+        //Palauttaa -1 jos paikkaa ei löydy tietokannasta
         try {
             PreparedStatement p = db.prepareStatement("SELECT id FROM Paikat WHERE paikannimi=?");
             p.setString(1, paikka);

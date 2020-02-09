@@ -15,7 +15,7 @@ public class Tapahtumat {
 
     public void uusiTapahtuma(int paikka_id, int paketti_id, String kuvaus) throws SQLException {
         try {
-            PreparedStatement p = db.prepareStatement("INSERT INTO Tapahtumat (paikka_id,paketti_id,date,kuvaus) VALUES (?,?,date(),?)");
+            PreparedStatement p = db.prepareStatement("INSERT INTO Tapahtumat (paikka_id,paketti_id,date,kuvaus) VALUES (?,?,datetime(),?)");
             p.setInt(1, paikka_id);
             p.setInt(2, paketti_id);
             p.setString(3, kuvaus);

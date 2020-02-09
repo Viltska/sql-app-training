@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2020.1.21)  8 FEB 2020 21:32
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2020.1.21)  9 FEB 2020 05:24
 entering extended mode
 **./ville_manninen.tex
 (ville_manninen.tex
@@ -254,19 +254,19 @@ university-of-helsinki-2-eps-converted-to.pdf>] (ville_manninen.toc)
 
  [2]
 LaTeX Font Info:    Trying to load font information for OMS+lmr on input line 2
-8.
+9.
 
 ("C:\Program Files\MiKTeX 2.9\tex/latex/lm\omslmr.fd"
 File: omslmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Font shape `OMS/lmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/lmsy/m/n' tried instead on input line 28.
+(Font)              Font shape `OMS/lmsy/m/n' tried instead on input line 29.
  [3] [4] [5] [6] [7]
 (ville_manninen.aux) ) 
 Here is how much of TeX's memory you used:
  2496 strings out of 492482
  35540 string characters out of 3130996
- 104871 words of memory out of 3000000
+ 106871 words of memory out of 3000000
  6793 multiletter control sequences out of 15000+200000
  37065 words of font info for 34 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -276,7 +276,7 @@ Here is how much of TeX's memory you used:
 s/MiKTeX 2.9/fonts/type1/public/lm/lmbx12.pfb><C:/Program Files/MiKTeX 2.9/font
 s/type1/public/lm/lmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/
 lmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmsy10.pfb>
-Output written on ville_manninen.pdf (7 pages, 99719 bytes).
+Output written on ville_manninen.pdf (7 pages, 100504 bytes).
 PDF statistics:
  47 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

@@ -146,7 +146,7 @@ public class DatabaseManager {
             System.out.println("Löytyi taulukko 'Paketit'");
         }
         try {
-            s.execute("CREATE TABLE Tapahtumat (id INTEGER PRIMARY KEY, paikka_id INTEGER NOT NULL, paketti_id INTEGER NOT NULL, date DATE, kuvaus TEXT NOT NULL)");
+            s.execute("CREATE TABLE Tapahtumat (id INTEGER PRIMARY KEY, paikka_id INTEGER NOT NULL, paketti_id INTEGER NOT NULL, date DATETIME, kuvaus TEXT NOT NULL)");
             System.out.println("Luotu taulukko 'Tapahtumat'");
 
         } catch (SQLException e) {

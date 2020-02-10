@@ -20,6 +20,7 @@ public class Main {
         System.out.println("4: Lisää tapahtuma");
         System.out.println("5: Hae paketin tapahtumat");
         System.out.println("6: Hae asiakkaan paketit");
+        System.out.println("7: Hae paikan tapahtumien määrä päivämäärällä");
         System.out.println("9: Luo tietokannan ja/tai puuttuvat taulukot");
         System.out.println("0: Lopettaa ohjelman");
         System.out.println("");
@@ -72,6 +73,14 @@ public class Main {
                 System.out.print("Syötä asiakkaan nimi: ");
                 String asiakas = lukija.nextLine();
                 manager.haeAsiakkaanPaketit(asiakas);
+            }
+            if(komento.equals("7")) {
+                System.out.println("Syötä päivämäärä muodossa 'YYYY-MM-DD'");
+                System.out.print("Päivämäärä: ");
+                String pvm = lukija.nextLine();
+                System.out.print("Syötä paikannimi: ");
+                String paikannimi = lukija.nextLine();
+                manager.haePaikanTapahtumatPaivamaaralla(pvm, paikannimi);
             }
             
             if (komento.equals("9")) {

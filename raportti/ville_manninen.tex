@@ -1,16 +1,58 @@
-\documentclass[12pt,a4paper]{article}
+\documentclass[11pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
 \usepackage[T1]{fontenc}
 \usepackage[finnish]{babel}
-
 \usepackage{graphicx}
 \usepackage{epstopdf}
+\usepackage{listings} 
+\usepackage{xcolor}
+\usepackage{textcomp}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{amber}{rgb}{1.0, 0.49, 0.0}
+
+%Java lstset
+\lstset{frame=tb,
+  language=Java,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{amber},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+%Multi-byte encoding
+\lstset{literate=
+  {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+  {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+  {à}{{\`a}}1 {è}{{\`e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1
+  {À}{{\`A}}1 {È}{{\'E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ù}{{\`U}}1
+  {ä}{{\"a}}1 {ë}{{\"e}}1 {ï}{{\"i}}1 {ö}{{\"o}}1 {ü}{{\"u}}1
+  {Ä}{{\"A}}1 {Ë}{{\"E}}1 {Ï}{{\"I}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
+  {â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
+  {Â}{{\^A}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1
+  {Ã}{{\~A}}1 {ã}{{\~a}}1 {Õ}{{\~O}}1 {õ}{{\~o}}1
+  {œ}{{\oe}}1 {Œ}{{\OE}}1 {æ}{{\ae}}1 {Æ}{{\AE}}1 {ß}{{\ss}}1
+  {ű}{{\H{u}}}1 {Ű}{{\H{U}}}1 {ő}{{\H{o}}}1 {Ő}{{\H{O}}}1
+  {ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1 {å}{{\r a}}1 {Å}{{\r A}}1
+  {€}{{\euro}}1 {£}{{\pounds}}1 {«}{{\guillemotleft}}1
+  {»}{{\guillemotright}}1 {ñ}{{\~n}}1 {Ñ}{{\~N}}1 {¿}{{?`}}1
+}
 
 \begin{document}
 \title{Tietokantojen perusteet, kevät 2020 \\
 Harjoitustyön raportti}
-\author{Ville Manninen \\014922187 \\Macville}
+\author{Ville Manninen\\ \\014922187 \\macville}
 \date{\today}
 \clearpage\maketitle
 \begin{center}
@@ -18,7 +60,6 @@ Harjoitustyön raportti}
 \includegraphics{university-of-helsinki-2.eps} 
 \end{center}
 \thispagestyle{empty}
-
 \newpage
 \tableofcontents
 \newpage
@@ -32,23 +73,22 @@ Harjoitustyö on toteutettu Java-ohjelmana käyttäen NetBeans ympäristöä, oh
 \item Paketin lisääminen tietokantaan käyttäen asiakkaan nimeä.
 \item Tapahtuman lisääminen tietokantaan käyttäen paikannimeä ja paketin seurantakoodia.
 \item Paketin tapahtumien hakeminen
-\item Asiakkaan pakettien hakeminen ja yksittäisten pakettien tapahtumien lukumäärä
+\item Asiakkaan pakettien hakeminen ja yksittäisten pakettien tapahtumien lukumäärä'
+\item Tapahtumien määrän hakeminen paikasta tietyllä päivämäärällä
 \end{itemize}
+\newpage
 \subsection*{Komennot}
 Ohjelmalle annetaan komentoja komentoriviltä käyttäen pelkästään komennon numeroa, komennon jälkeen ohjelma kysyy käyttäjältä tarvittavia jatkosyötteitä. Ohjelmalla on seuraavat komennot jotka esiintyvät myös ohjelman valikossa.
 \begin{description}
-
 \item \textbf{1} Uuden asiakkaan lisääminen
 \item \textbf{2} Uuden paikan lisääminen
 \item \textbf{3} Paketin lisääminen
 \item \textbf{4} Uuden tapahtuman lisääminen
-\item \textbf{5} Tulostaa halutun paketin tapahtumat
-\item \textbf{6} Tulostaa halutun asiakkaan paketit ja niihin liittyvien tapahtumien määrän
+\item \textbf{5} Tulostaa paketin tapahtumat
+\item \textbf{6} Tulostaa asiakkaan paketit ja niihin liittyvien tapahtumien määrän
+\item \textbf{7} Tapahtumien määrän haku paikasta tietyllä päivämäärällä
 \item \textbf{0} Sulkee ohjelman 
-
 \end{description}
-
-
 
 \newpage
 \section{Kaaviot ja Skeemat}
@@ -64,9 +104,10 @@ Ohjelmalle annetaan komentoja komentoriviltä käyttäen pelkästään komennon 
 
 \newpage
 \section{Tietokannan eheys}
-Tietokantaan ei ole mahdollista luoda samannimisiä asiakkaita tai paikkoja, eikä tietokantaan luoduilla paketeilla saa antaa samaa seurantakoodia. Samannimisiä syötteitä valvotaan SQliten toiminnolla UNIQUE, joka varmistaa että taulukkoon ei lisätä samannimisiä arvoja. 
-
-Ohjelma tarkistaa käyttäjän antamat syötteet ja ilmoittaa syyn jos syöte on puutteellinen, se tarkistaa myös että sille annetut syötteet eivät ole tyhjiä eikä tietokantaan lisätä NULL arvoja. Tietokantaan lisättäessä paketteja tai tapahtumia jotka viittaavat toisiin taulukoihin, sovellus varmistaa että annetut viitteet löytyvät tietokannasta.
+Ohjelman tietokannan eheyttä pidetään yllä käyttämällä SQLiten sekä Javan tarjoamia ominaisuuksia.
+Tietokantaan ei ole mahdollista luoda samannimisiä asiakkaita tai paikkoja, eikä tietokantaan luoduille paketeille saa antaa samaa seurantakoodia. Samannimisiä syötteitä valvotaan SQLiten komennolla UNIQUE, joka varmistaa ettei samaan taulukkoon lisätä samannimisiä arvoja. Lisäksi SQLiten avulla valvotaan että taulukoiden arvot eivät olle NULL arvoisia komennolla NOT NULL.
+ 
+Java-ohjelma tarkistaa käyttäjän antamat syötteet ja ilmoittaa syyn jos syöte on puutteellinen, esimerkiksi jos käyttäjän syöte on tyhjä. Tietokantaan lisättäessä paketteja tai tapahtumia jotka viittaavat toisiin taulukoihin, sovellus varmistaa että annetut viitteet löytyvät tietokannasta.
 
 
 
@@ -74,11 +115,26 @@ Ohjelma tarkistaa käyttäjän antamat syötteet ja ilmoittaa syyn jos syöte on
 
 \newpage
 \section{Lähdekoodi}
-\subsection*{GitHub}
-\textbf{https://github.com/Viltska/sql-app-training}
-\subsection*{Koodi}
+\pagestyle{empty}
+\textbf{https://github.com/Viltska/sql-app-training}.
 
+\subsection*{Main.java}
+\lstinputlisting[language=Java]{E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Tikape/Main.java}
 
 \newpage
+\subsection*{DatabaseManager.java}
+\lstinputlisting[language=Java]{E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Tikape/DatabaseManager.java}
 
+\newpage
+\subsection*{Asiakkaat.java}
+\lstinputlisting[language=Java]{E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Tikape/Asiakkaat.java}
+\newpage
+\subsection*{Paikat.java}
+\lstinputlisting[language=Java]{E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Tikape/Paikat.java}
+\newpage
+\subsection*{Paketit.java}
+\lstinputlisting[language=Java]{E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Tikape/Paketit.java}
+\newpage
+\subsection*{Tapahtumat.java}
+\lstinputlisting[language=Java]{E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Tikape/Tapahtumat.java}
 \end{document}

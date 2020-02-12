@@ -1,3 +1,4 @@
 /dist/
-tehokkuus.db
-*.db
+*.log
+*.sql
+*.sqlite

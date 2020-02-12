@@ -6,7 +6,7 @@ public class Main {
 
     public static void main(String[] args) throws SQLException {
         Scanner lukija = new Scanner(System.in);
-        String databaseName = "tehokkuus.db";
+        String databaseName = "tikape.db";
         System.out.println("Current database: " + databaseName);
         DatabaseManager manager = new DatabaseManager(databaseName);
 
@@ -83,7 +83,13 @@ public class Main {
                 manager.haePaikanTapahtumatPaivamaaralla(pvm, paikannimi);
             }
             if (komento.equals("8")) {
-                manager.tehokkuusTesti();
+                System.out.print("Tallennetaanko testin taulukot? (Y/N): ");
+                String yesno = lukija.nextLine();
+                boolean poistetaan = false;
+                if (yesno.equals("N") || yesno.equals("n")) {
+                    poistetaan = true;
+                }
+                manager.tehokkuusTesti(poistetaan);
             }
 
             if (komento.equals("9")) {

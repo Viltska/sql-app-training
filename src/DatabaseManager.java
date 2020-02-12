@@ -5,7 +5,7 @@ import java.sql.*;
 
 public class DatabaseManager {
 
-    //Taulukko luokat
+    // Taulukko luokat
     private final Asiakkaat asiakkaat;
     private final Paikat paikat;
     private final Paketit paketit;
@@ -25,7 +25,7 @@ public class DatabaseManager {
     }
 
     public void uusiAsiakas(String nimi) throws SQLException {
-        //Tarkistetaan että syöte ei ole tyhjä
+        // Tarkistetaan että syöte ei ole tyhjä
         if (!nimi.isEmpty()) {
             this.asiakkaat.uusiAsiakas(nimi);
         } else {
@@ -34,7 +34,7 @@ public class DatabaseManager {
     }
 
     public void uusiPaikka(String nimi) throws SQLException {
-        //Tarkistetaan että syöte ei ole tyhjä
+        // Tarkistetaan että syöte ei ole tyhjä
         if (!nimi.isEmpty()) {
             this.paikat.uusiPaikka(nimi);
         } else {
@@ -56,11 +56,11 @@ public class DatabaseManager {
     }
 
     public void uusiTapahtuma(String paikka, String seurantaKoodi, String kuvaus) throws SQLException {
-        //Tarkistetaan että syötteet eivät ole tyhjä
+        // Tarkistetaan että syötteet eivät ole tyhjä
         if (!paikka.isEmpty() && !seurantaKoodi.isEmpty() && !kuvaus.isEmpty()) {
             int paikka_id = paikat.getPaikkaID(paikka);
             int paketti_id = paketit.getID(seurantaKoodi);
-            //Tarkistetaan että paikka ja paketti löytyvät tietokannasta
+            // Tarkistetaan että paikka ja paketti löytyvät tietokannasta
             if (paikka_id != -1) {
                 if (paketti_id != -1) {
                     tapahtumat.uusiTapahtuma(paikka_id, paketti_id, kuvaus);
@@ -78,11 +78,11 @@ public class DatabaseManager {
     }
 
     public void haePaketinTapahtumat(String seurantaKoodi) throws SQLException {
-        //Tarkistetaan että syöte ei ole tyhjä
+        // Tarkistetaan että syöte ei ole tyhjä
         if (!seurantaKoodi.isEmpty()) {
             int paketti_id = paketit.getID(seurantaKoodi);
 
-            //Tarkistetaan että paketti löytyy tietokannasta
+            // Tarkistetaan että paketti löytyy tietokannasta
             if (paketti_id != -1) {
                 try {
                     System.out.println("Paketin: " + seurantaKoodi + ", ID: " + paketti_id + ", tapahtumat:");
@@ -100,9 +100,9 @@ public class DatabaseManager {
 
     public void haeAsiakkaanPaketit(String asiakas) throws SQLException {
         int asiakkaan_id = asiakkaat.getID(asiakas);
-        //Tarkistetaan että syöte ei ole tyhjä
+        // Tarkistetaan että syöte ei ole tyhjä
         if (!asiakas.isEmpty()) {
-            //Tarkistetaan että asiakas löytyy tietokannasta
+            // Tarkistetaan että asiakas löytyy tietokannasta
             if (asiakkaan_id != -1) {
                 try {
                     asiakkaat.haeAsiakkaanPaketit(asiakkaan_id);
@@ -139,17 +139,18 @@ public class DatabaseManager {
         }
     }
 
-    //Tehokkuustesti / Performance
-    public void tehokkuusTesti() throws SQLException {
-
+    // Tehokkuustesti (Performance test)
+    public void tehokkuusTesti(boolean poistetaan) throws SQLException {
         //Luo uuden tietokannan nimellä 'tehokkuus.db' ja ottaa tietokantaan yhteyden
         this.db = DriverManager.getConnection("jdbc:sqlite:tehokkuus.db");
         createTables();
+        Statement s = db.createStatement();
+        db.setAutoCommit(false);
+
         try {
             System.out.println("Tehokkuustesti..");
             System.out.println("Tietokantaan lisätään tuhat käyttäjää, tuhat paikkaa ja miljoona tapahtumaa (Vaiheet 1-4)");
-            Statement s = db.createStatement();
-            s.execute("BEGIN TRANSACTION");
+
             long t1 = System.nanoTime();
             for (int i = 1; i < 1001; i++) {
                 PreparedStatement p = db.prepareStatement("INSERT INTO Asiakkaat (nimi) VALUES (?)");
@@ -162,7 +163,6 @@ public class DatabaseManager {
 
                 } catch (SQLException e) {
                     System.out.println(e);
-                    break;
                 }
 
             }
@@ -176,20 +176,24 @@ public class DatabaseManager {
                     p3.execute();
                 } catch (SQLException e) {
                     System.out.println(e);
-                    break;
                 }
             }
             long t2 = System.nanoTime();
-            s.execute("COMMIT");
 
             System.out.println("Aikaa kului (1-4): " + (t2 - t1) / 1e9 + " sekuntia");
         } catch (SQLException e) {
             System.out.println(e);
         }
+        if (!poistetaan) {
+            db.commit();
+        } else {
+            db.rollback();
+        }
 
         // Sulkee yhteyden tehokkuustesti-tietokantaan ja ottaa yhteyden alkuperäiseen tietokantaan
         this.db.close();
         this.db = DriverManager.getConnection(connectionName);
+        db.setAutoCommit(true);
     }
 
     public void createTables() throws SQLException {

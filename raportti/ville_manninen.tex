@@ -49,45 +49,49 @@
   {»}{{\guillemotright}}1 {ñ}{{\~n}}1 {Ñ}{{\~N}}1 {¿}{{?`}}1
 }
 
+
 \begin{document}
+\author{Ville Manninen
+\thanks{mooc.fi: vw.manninen@gmail.com}
+\thanks{opiskelijanumero: 014922187}}
+\date{\today}
 \title{Tietokantojen perusteet, kevät 2020 \\
 Harjoitustyön raportti}
-\author{Ville Manninen\\ \\014922187 \\macville}
-\date{\today}
-\clearpage\maketitle
+\maketitle
 \begin{center}
 \vspace{2cm}
 \includegraphics{university-of-helsinki-2.eps} 
 \end{center}
-\thispagestyle{empty}
 \newpage
 \tableofcontents
 \newpage
 \section{Esittely}
-\subsection*{Yleistä}
-Harjoitustyö on toteutettu Java-ohjelmana käyttäen NetBeans ympäristöä, ohjelmalla on seuraavat ominaisuudet.
+Harjoitustyö on moniluokkainen Java-ohjelma jonka voidaan tallentaa asiakkaita, paikkoja, paketteja ja niihin liittyviä tapahtumia. Ohjelma tallentaa tiedot tietokantaan tiedostona käyttämällä SQLite ajuria. Tallennetut tiedot jäävät muistiin ohjelman sulkemisen jälkeen ja niitä voidaan tarkastella myöhemmin.
+
+\subsection*{Ominaisuudet}
+Ohjelmalla on kirjoitushetkellä seuraavat ominaisuudet.
 \begin{itemize}
 \item Tietokannan ja puuttuvien taulukoiden luominen.
 \item Asiakkaiden lisääminen tietokantaan nimellä.
 \item Paikan lisäämien tietokantaan nimellä.
 \item Paketin lisääminen tietokantaan käyttäen asiakkaan nimeä.
 \item Tapahtuman lisääminen tietokantaan käyttäen paikannimeä ja paketin seurantakoodia.
-\item Paketin tapahtumien hakeminen
-\item Asiakkaan pakettien hakeminen ja yksittäisten pakettien tapahtumien lukumäärä'
-\item Tapahtumien määrän hakeminen paikasta tietyllä päivämäärällä
+\item Paketin tapahtumien hakeminen.
+\item Asiakkaan pakettien hakeminen ja yksittäisten pakettien tapahtumien lukumäärä.
+\item Tapahtumien määrän hakeminen paikasta tietyllä päivämäärällä.
 \end{itemize}
 \newpage
 \subsection*{Komennot}
-Ohjelmalle annetaan komentoja komentoriviltä käyttäen pelkästään komennon numeroa, komennon jälkeen ohjelma kysyy käyttäjältä tarvittavia jatkosyötteitä. Ohjelmalla on seuraavat komennot jotka esiintyvät myös ohjelman valikossa.
+Ohjelmalle annetaan komentoja käyttämällä komennoille merkittyä numeroa.
 \begin{description}
-\item \textbf{1} Uuden asiakkaan lisääminen
-\item \textbf{2} Uuden paikan lisääminen
-\item \textbf{3} Paketin lisääminen
-\item \textbf{4} Uuden tapahtuman lisääminen
-\item \textbf{5} Tulostaa paketin tapahtumat
-\item \textbf{6} Tulostaa asiakkaan paketit ja niihin liittyvien tapahtumien määrän
-\item \textbf{7} Tapahtumien määrän haku paikasta tietyllä päivämäärällä
-\item \textbf{0} Sulkee ohjelman 
+\item Komento \textbf{1} lisää uuden asiakkaan tietokantaan
+\item Komento \textbf{2} lisää uuden paikan tietokantaan
+\item Komento \textbf{3} lisää uuden paketin tietokantaan
+\item Komento \textbf{4} lisää uuden tapahtuman tietokantaan
+\item Komento \textbf{5} tulostaa paketin tapahtumat tietokannasta
+\item Komento \textbf{6} tulostaa asiakkaan paketit ja niihin liittyvien tapahtumien määrän tietokannasta
+\item Komento \textbf{7} tulostaa tapahtumien määrän haku paikasta tietyllä päivämäärällä tietokannasta
+\item Komento \textbf{0} Sulkee ohjelman 
 \end{description}
 
 \newpage

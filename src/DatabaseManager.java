@@ -1,4 +1,3 @@
-package Tikape;
 
 import java.sql.Connection;
 import java.sql.*;
@@ -13,17 +12,17 @@ public class DatabaseManager {
     // SQL
     private final String connection;
     private final Connection db;
-    
+
     public DatabaseManager(String database) throws SQLException {
         this.connection = "jdbc:sqlite:" + database;
         this.db = DriverManager.getConnection(connection);
-        
+
         this.asiakkaat = new Asiakkaat(this.db);
         this.paikat = new Paikat(this.db);
         this.paketit = new Paketit(this.db);
         this.tapahtumat = new Tapahtumat(this.db);
     }
-    
+
     public void uusiAsiakas(String nimi) throws SQLException {
         //Tarkistetaan että syöte ei ole tyhjä
         if (!nimi.isEmpty()) {
@@ -32,7 +31,7 @@ public class DatabaseManager {
             System.out.println("Asiakkaan nimi ei saa olla tyhjä");
         }
     }
-    
+
     public void uusiPaikka(String nimi) throws SQLException {
         //Tarkistetaan että syöte ei ole tyhjä
         if (!nimi.isEmpty()) {
@@ -41,15 +40,12 @@ public class DatabaseManager {
             System.out.println("Paikannimi ei saa olla tyhjä");
         }
     }
-    
-    public void uusiPaketti(String asiakas, String koodi) throws SQLException {
-        // .getID(asiakas) hakee SQL tietokannasta asiakkaan id, jos asiakasta ei löydy palautetaan arvo -1
-        //Tarkistetaan että syötteet eivät ole tyhjä
-        if (!asiakas.isEmpty() && !koodi.isEmpty()) {
+
+    public void uusiPaketti(String asiakas, String seurantakoodi) throws SQLException {
+        if (!asiakas.isEmpty() && !seurantakoodi.isEmpty()) {
             int asiakas_id = asiakkaat.getID(asiakas);
-            //Jos asiakasta ei löydy tietokannasta ei pakettia lisätä
             if (asiakas_id != -1) {
-                paketit.uusiPaketti(asiakas_id, koodi);
+                paketit.uusiPaketti(asiakas_id, seurantakoodi);
             } else {
                 System.out.println("Asiakasta ei löytynyt");
             }
@@ -57,7 +53,7 @@ public class DatabaseManager {
             System.out.println("Asiakkaan nimi tai seurantakoodi eivät saa olla tyhiä");
         }
     }
-    
+
     public void uusiTapahtuma(String paikka, String seurantaKoodi, String kuvaus) throws SQLException {
         //Tarkistetaan että syötteet eivät ole tyhjä
         if (!paikka.isEmpty() && !seurantaKoodi.isEmpty() && !kuvaus.isEmpty()) {
@@ -73,13 +69,13 @@ public class DatabaseManager {
             } else {
                 System.out.println("Paikkaa ei löytynyt");
             }
-            
+
         } else {
             System.out.println("Syöteet eivät saa olla tyhjä");
         }
-        
+
     }
-    
+
     public void haePaketinTapahtumat(String seurantaKoodi) throws SQLException {
         //Tarkistetaan että syöte ei ole tyhjä
         if (!seurantaKoodi.isEmpty()) {
@@ -88,6 +84,7 @@ public class DatabaseManager {
             //Tarkistetaan että paketti löytyy tietokannasta
             if (paketti_id != -1) {
                 try {
+                    System.out.println("Paketin: "+ seurantaKoodi + ", ID: " + paketti_id + ", tapahtumat:");
                     paketit.haePaketinTapahtumat(paketti_id);
                 } catch (SQLException e) {
                     System.out.println(e);
@@ -99,7 +96,7 @@ public class DatabaseManager {
             System.out.println("Syöte ei saa olla tyhjä");
         }
     }
-    
+
     public void haeAsiakkaanPaketit(String asiakas) throws SQLException {
         int asiakkaan_id = asiakkaat.getID(asiakas);
         //Tarkistetaan että syöte ei ole tyhjä
@@ -114,62 +111,67 @@ public class DatabaseManager {
             } else {
                 System.out.println("Asiakasta ei löytynyt tietokannasta");
             }
-            
+
         } else {
             System.out.println("Syöte ei saa olla tyhjä");
         }
     }
 
     public void haePaikanTapahtumatPaivamaaralla(String paivamaara, String paikannimi) throws SQLException {
+        String regex = "^((19|20)\\d\\d)-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])$";
         int paikka_id = paikat.getPaikkaID(paikannimi);
-        if (paikka_id != -1) {
-            try {
-                tapahtumat.haeTapahtumatPaikasta(paivamaara, paikannimi);
-                
-            } catch (SQLException e) {
-                System.out.println(e);
+        if (paivamaara.matches(regex)) {
+            if (paikka_id != -1) {
+                try {
+                    System.out.println("Haetaan paikan ("+ paikannimi + ") tapahtumat, pvm("+ paivamaara+").");
+                    tapahtumat.haeTapahtumatPaikasta(paivamaara, paikannimi);
+
+                } catch (SQLException e) {
+                    System.out.println(e);
+                }
+
+            } else {
+                System.out.println("Paikkaa ei löytynyt");
             }
-            
         } else {
-            System.out.println("Paikkaa ei löytynyt");
+            System.out.println("Tarkista että päivämäärä on oikein ja muodossa 'YYYY-MM-DD'");
         }
-        
     }
-    
+
     public void createTables() throws SQLException {
         Statement s = db.createStatement();
         try {
             s.execute("CREATE TABLE Asiakkaat (id INTEGER PRIMARY KEY, nimi TEXT NOT NULL UNIQUE)");
             System.out.println("Luotu taulukko 'Asiakkaat'");
-            
+
         } catch (SQLException e) {
             System.out.println("Löytyi taulukko 'Asiakkaat'");
         }
         try {
             s.execute("CREATE TABLE Paikat (id INTEGER PRIMARY KEY, paikannimi TEXT NOT NULL UNIQUE)");
             System.out.println("Luotu taulukko 'Paikat'");
-            
+
         } catch (SQLException e) {
             System.out.println("Löytyi taulukko 'Paikat'");
         }
         try {
             s.execute("CREATE TABLE Paketit (id INTEGER PRIMARY KEY, asiakas_id INTEGER NOT NULL, seurantakoodi TEXT NOT NULL UNIQUE)");
             System.out.println("Luotu taulukko 'Paketit'");
-            
+
         } catch (SQLException e) {
             System.out.println("Löytyi taulukko 'Paketit'");
         }
         try {
             s.execute("CREATE TABLE Tapahtumat (id INTEGER PRIMARY KEY, paikka_id INTEGER NOT NULL, paketti_id INTEGER NOT NULL, date DATETIME, kuvaus TEXT NOT NULL)");
             System.out.println("Luotu taulukko 'Tapahtumat'");
-            
+
         } catch (SQLException e) {
             System.out.println("Löytyi taulukko 'Tapahtumat'");
         }
         System.out.println("Tietokanta valmis.");
-        
+
     }
-    
+
     public void tikapePrint() {
         System.out.println("----------------------------------------------------");
         System.out.println(" ______  ______   __  __   ______  ____    ____      ");
@@ -182,5 +184,5 @@ public class DatabaseManager {
         System.out.println("                                                     ");
         System.out.println("----------------------------------------------------");
     }
-    
+
 }

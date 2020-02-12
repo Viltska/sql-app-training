@@ -1,5 +1,3 @@
-package Tikape;
-
 import java.sql.*;
 
 public class Asiakkaat {
@@ -36,6 +34,7 @@ public class Asiakkaat {
                 return -1;
             }
         } catch (SQLException e) {
+            System.out.println("Ongelma metodissa 'Asiakas.getID'");
             System.out.println(e);
         }
         return -1;
@@ -47,7 +46,7 @@ public class Asiakkaat {
             PreparedStatement p = db.prepareStatement("SELECT seurantakoodi, COUNT(Tapahtumat.paketti_id) FROM Paketit\n"
                     + "LEFT JOIN Tapahtumat ON Tapahtumat.paketti_id = Paketit.id\n"
                     + "LEFT JOIN Asiakkaat ON Asiakkaat.id = Paketit.asiakas_id\n"
-                    + "GROUP BY Paketit.seurantakoodi HAVING Paketit.asiakas_id = ?;");
+                    + "GROUP BY Paketit.seurantakoodi HAVING Paketit.asiakas_id = ?");
             p.setInt(1, asiakas_id);
             ResultSet r = p.executeQuery();
 

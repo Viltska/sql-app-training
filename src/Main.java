@@ -1,17 +1,15 @@
-package Tikape;
-
 import java.sql.*;
 import java.util.Scanner;
 
 public class Main {
-    
+
     public static void main(String[] args) throws SQLException {
         Scanner lukija = new Scanner(System.in);
         String databaseName = "tikape.db";
         System.out.println("Current database: " + databaseName);
-        
         DatabaseManager manager = new DatabaseManager(databaseName);
-        
+
+        //Komentorivi ohjelma
         System.out.println("Komennot:");
         System.out.println("");
         System.out.println("1: Lisää asiakas ");
@@ -24,7 +22,7 @@ public class Main {
         System.out.println("9: Luo tietokannan ja/tai puuttuvat taulukot");
         System.out.println("0: Lopettaa ohjelman");
         System.out.println("");
-        
+
         while (true) {
             System.out.print("Syötä komento: ");
             String komento = lukija.nextLine();
@@ -37,21 +35,21 @@ public class Main {
                 System.out.print("Syötä nimi: ");
                 String nimi = lukija.nextLine();
                 manager.uusiAsiakas(nimi);
-                
+
             }
             if (komento.equals("2")) {
                 System.out.print("Syötä paikannimi: ");
                 String paikka = lukija.nextLine();
                 manager.uusiPaikka(paikka);
-                
+
             }
-            
+
             if (komento.equals("3")) {
                 System.out.print("Syötä paketin asiakas: ");
                 String asiakas = lukija.nextLine();
                 System.out.print("Syötä paketin seurantakoodi: ");
                 String koodi = lukija.nextLine();
-                
+
                 manager.uusiPaketti(asiakas, koodi);
             }
             if (komento.equals("4")) {
@@ -62,7 +60,7 @@ public class Main {
                 System.out.print("Syötä tapahtuman kuvaus: ");
                 String kuvaus = lukija.nextLine();
                 manager.uusiTapahtuma(paikka, seurantaKoodi, kuvaus);
-                
+
             }
             if (komento.equals("5")) {
                 System.out.print("Syötä paketin seurantakoodi: ");
@@ -74,7 +72,7 @@ public class Main {
                 String asiakas = lukija.nextLine();
                 manager.haeAsiakkaanPaketit(asiakas);
             }
-            if(komento.equals("7")) {
+            if (komento.equals("7")) {
                 System.out.println("Syötä päivämäärä muodossa 'YYYY-MM-DD'");
                 System.out.print("Päivämäärä: ");
                 String pvm = lukija.nextLine();
@@ -82,12 +80,11 @@ public class Main {
                 String paikannimi = lukija.nextLine();
                 manager.haePaikanTapahtumatPaivamaaralla(pvm, paikannimi);
             }
-            
+
             if (komento.equals("9")) {
                 System.out.println("Tarkistetaan tietokantaa..");
                 manager.createTables();
             }
-            
         }
     }
 }

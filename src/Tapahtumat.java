@@ -1,4 +1,3 @@
-package Tikape;
 
 import java.sql.*;
 
@@ -38,8 +37,7 @@ public class Tapahtumat {
                 System.out.println("Paikassa ei ollut tapahtumia annetulla päivämäärällä");
             } else {
                 do {
-                    System.out.println("Tapahtumien määrä: " + r.getString("Tapahtumia"));
-
+                    System.out.println("Tapahtumia: " + r.getString("Tapahtumia"));
                 } while (r.next());
             }
 

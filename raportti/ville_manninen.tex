@@ -14,7 +14,7 @@
 \definecolor{amber}{rgb}{1.0, 0.49, 0.0}
 
 %Java lstset
-\lstset{frame=tb,
+\lstset{frame=none,
   language=Java,
   aboveskip=3mm,
   belowskip=3mm,
@@ -105,13 +105,9 @@ Ohjelmalle annetaan komentoja komentoriviltä käyttäen pelkästään komennon 
 \newpage
 \section{Tietokannan eheys}
 Ohjelman tietokannan eheyttä pidetään yllä käyttämällä SQLiten sekä Javan tarjoamia ominaisuuksia.
-Tietokantaan ei ole mahdollista luoda samannimisiä asiakkaita tai paikkoja, eikä tietokantaan luoduille paketeille saa antaa samaa seurantakoodia. Samannimisiä syötteitä valvotaan SQLiten komennolla UNIQUE, joka varmistaa ettei samaan taulukkoon lisätä samannimisiä arvoja. Lisäksi SQLiten avulla valvotaan että taulukoiden arvot eivät olle NULL arvoisia komennolla NOT NULL.
+Tietokantaan ei ole mahdollista luoda samannimisiä asiakkaita tai paikkoja, eikä tietokantaan luoduille paketeille saa antaa samaa seurantakoodia. Samannimisiä syötteitä valvotaan SQLiten rajoitteella UNIQUE, joka varmistaa ettei samaan taulukkoon lisätä samannimisiä arvoja. Lisäksi SQLiten rajoitteella NOT NULL valvotaan että sarakkeisiin ei lisätä tyhjiä arvoja.
  
 Java-ohjelma tarkistaa käyttäjän antamat syötteet ja ilmoittaa syyn jos syöte on puutteellinen, esimerkiksi jos käyttäjän syöte on tyhjä. Tietokantaan lisättäessä paketteja tai tapahtumia jotka viittaavat toisiin taulukoihin, sovellus varmistaa että annetut viitteet löytyvät tietokannasta.
-
-
-
-
 
 \newpage
 \section{Lähdekoodi}
@@ -119,22 +115,16 @@ Java-ohjelma tarkistaa käyttäjän antamat syötteet ja ilmoittaa syyn jos syö
 \textbf{https://github.com/Viltska/sql-app-training}.
 
 \subsection*{Main.java}
-\lstinputlisting[language=Java]{E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Tikape/Main.java}
-
-\newpage
+\lstinputlisting[language=Java]{E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Main.java}
 \subsection*{DatabaseManager.java}
-\lstinputlisting[language=Java]{E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Tikape/DatabaseManager.java}
+\lstinputlisting[language=Java]{E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/DatabaseManager.java}
 
-\newpage
 \subsection*{Asiakkaat.java}
-\lstinputlisting[language=Java]{E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Tikape/Asiakkaat.java}
-\newpage
+\lstinputlisting[language=Java]{E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Asiakkaat.java}
 \subsection*{Paikat.java}
-\lstinputlisting[language=Java]{E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Tikape/Paikat.java}
-\newpage
+\lstinputlisting[language=Java]{E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Paikat.java}
 \subsection*{Paketit.java}
-\lstinputlisting[language=Java]{E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Tikape/Paketit.java}
-\newpage
+\lstinputlisting[language=Java]{E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Paketit.java}
 \subsection*{Tapahtumat.java}
-\lstinputlisting[language=Java]{E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Tikape/Tapahtumat.java}
+\lstinputlisting[language=Java]{E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Tapahtumat.java}
 \end{document}

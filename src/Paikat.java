@@ -1,4 +1,3 @@
-package Tikape;
 
 import java.sql.*;
 
@@ -11,20 +10,21 @@ public class Paikat {
 
     }
 
-    public void uusiPaikka(String nimi) throws SQLException {
-
+    public void uusiPaikka(String paikannimi) throws SQLException {
+        // Annettu paikka ei saa löytyä tietokannasta
         try {
             PreparedStatement p = db.prepareStatement("INSERT INTO Paikat (paikannimi) VALUES (?)");
-            p.setString(1, nimi);
+            p.setString(1, paikannimi);
             p.executeUpdate();
             System.out.println("Paikka lisätty");
         } catch (SQLException e) {
+            System.out.println("Ongelma metodissa 'Paikat.uusiPaikka'");
             System.out.println(e);
         }
     }
 
     public int getPaikkaID(String paikka) throws SQLException {
-        //Palauttaa -1 jos paikkaa ei löydy tietokannasta
+        //Palauttaa arvon -1 jos paikkaa ei löydy tietokannasta
         try {
             PreparedStatement p = db.prepareStatement("SELECT id FROM Paikat WHERE paikannimi=?");
             p.setString(1, paikka);
@@ -38,6 +38,7 @@ public class Paikat {
                 return -1;
             }
         } catch (SQLException e) {
+            System.out.println("Ongelma metodissa 'Paikat.getPaikkaID'");
             System.out.println(e);
         }
         return -1;

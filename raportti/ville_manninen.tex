@@ -66,12 +66,12 @@ Harjoitustyön raportti}
 \tableofcontents
 \newpage
 \section{Esittely}
-Harjoitustyö on moniluokkainen Java-ohjelma jonka voidaan tallentaa asiakkaita, paikkoja, paketteja ja niihin liittyviä tapahtumia. Ohjelma tallentaa tiedot tietokantaan tiedostona käyttämällä SQLite ajuria. Tallennetut tiedot jäävät muistiin ohjelman sulkemisen jälkeen ja niitä voidaan tarkastella myöhemmin.
+Harjoitustyö on moniluokkainen komentoriviohjelma jonka avulla voidaan tallentaa asiakkaita, paikkoja, paketteja ja niihin liittyviä tapahtumia tietokantaan. Tietokantaan voidaan suorittaa ennakkoon määriteltyjä kyselyita, kyselyiden tulokset tulostetaan käyttäjän komentoriville. Ohjelmaan tallennetut tiedot jäävät muistiin tietokantaan ohjelman sulkemisen jälkeen.
 
-\subsection*{Ominaisuudet}
+\subsection*{Ohjelman ominaisuudet}
 Ohjelmalla on kirjoitushetkellä seuraavat ominaisuudet.
 \begin{itemize}
-\item Tietokannan ja puuttuvien taulukoiden luominen.
+\item Tietokannan ja tyhjien taulujen luominen.
 \item Asiakkaiden lisääminen tietokantaan nimellä.
 \item Paikan lisäämien tietokantaan nimellä.
 \item Paketin lisääminen tietokantaan käyttäen asiakkaan nimeä.
@@ -81,7 +81,7 @@ Ohjelmalla on kirjoitushetkellä seuraavat ominaisuudet.
 \item Tapahtumien määrän hakeminen paikasta tietyllä päivämäärällä.
 \end{itemize}
 \newpage
-\subsection*{Komennot}
+\subsection*{Komentorivi komennot}
 Ohjelmalle annetaan komentoja käyttämällä komennoille merkittyä numeroa.
 \begin{description}
 \item Komento \textbf{1} lisää uuden asiakkaan tietokantaan
@@ -108,9 +108,9 @@ Ohjelmalle annetaan komentoja käyttämällä komennoille merkittyä numeroa.
 \newpage
 \section{Tietokannan eheys}
 Ohjelman tietokannan eheyttä pidetään yllä käyttämällä SQLiten sekä Javan tarjoamia ominaisuuksia.
-Tietokantaan ei ole mahdollista luoda samannimisiä asiakkaita tai paikkoja, eikä tietokantaan luoduille paketeille saa antaa samaa seurantakoodia. Samannimisiä syötteitä valvotaan SQLiten rajoitteella UNIQUE, joka varmistaa ettei samaan taulukkoon lisätä samannimisiä arvoja. Lisäksi SQLiten rajoitteella NOT NULL valvotaan että sarakkeisiin ei lisätä tyhjiä arvoja.
+Tietokantaan ei ole mahdollista luoda samannimisiä asiakkaita tai paikkoja, eikä tietokantaan luoduille paketeille saa antaa samaa seurantakoodia. Samannimisiä syötteitä valvotaan SQLiten rajoitteella UNIQUE, joka varmistaa ettei samaan tauluun lisätä samannimisiä arvoja. Lisäksi SQLiten rajoitteella NOT NULL valvotaan että sarakkeisiin ei lisätä tyhjiä arvoja.
  
-Java-ohjelma tarkistaa käyttäjän antamat syötteet ja ilmoittaa syyn jos annettu syöte on puutteellinen, esimerkiksi jos käyttäjän syöte on tyhjä. Tietokantaan lisättäessä paketteja tai tapahtumia jotka viittaavat toisiin taulukoihin, sovellus varmistaa että annetut viitteet löytyvät tietokannasta.
+Java-ohjelma tarkistaa käyttäjän antamat syötteet ja ilmoittaa syyn jos annettu syöte on puutteellinen, esimerkiksi jos käyttäjän syöte on tyhjä. Tietokantaan lisättäessä paketteja tai tapahtumia jotka viittaavat muualle tallennettuun tietoon, sovellus varmistaa että annetut viitteet löytyvät tietokannasta.
 
 \newpage
 \section{Lähdekoodi}

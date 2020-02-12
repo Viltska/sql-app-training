@@ -1,4 +1,5 @@
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.*;
 
@@ -10,12 +11,12 @@ public class DatabaseManager {
     private final Paketit paketit;
     private final Tapahtumat tapahtumat;
     // SQL
-    private final String connection;
-    private final Connection db;
+    private final String connectionName;
+    private Connection db;
 
     public DatabaseManager(String database) throws SQLException {
-        this.connection = "jdbc:sqlite:" + database;
-        this.db = DriverManager.getConnection(connection);
+        this.connectionName = "jdbc:sqlite:" + database;
+        this.db = DriverManager.getConnection(connectionName);
 
         this.asiakkaat = new Asiakkaat(this.db);
         this.paikat = new Paikat(this.db);
@@ -84,7 +85,7 @@ public class DatabaseManager {
             //Tarkistetaan että paketti löytyy tietokannasta
             if (paketti_id != -1) {
                 try {
-                    System.out.println("Paketin: "+ seurantaKoodi + ", ID: " + paketti_id + ", tapahtumat:");
+                    System.out.println("Paketin: " + seurantaKoodi + ", ID: " + paketti_id + ", tapahtumat:");
                     paketit.haePaketinTapahtumat(paketti_id);
                 } catch (SQLException e) {
                     System.out.println(e);
@@ -123,7 +124,7 @@ public class DatabaseManager {
         if (paivamaara.matches(regex)) {
             if (paikka_id != -1) {
                 try {
-                    System.out.println("Haetaan paikan ("+ paikannimi + ") tapahtumat, pvm("+ paivamaara+").");
+                    System.out.println("Haetaan paikan (" + paikannimi + ") tapahtumat, pvm(" + paivamaara + ").");
                     tapahtumat.haeTapahtumatPaikasta(paivamaara, paikannimi);
 
                 } catch (SQLException e) {
@@ -136,6 +137,59 @@ public class DatabaseManager {
         } else {
             System.out.println("Tarkista että päivämäärä on oikein ja muodossa 'YYYY-MM-DD'");
         }
+    }
+
+    //Tehokkuustesti / Performance
+    public void tehokkuusTesti() throws SQLException {
+
+        //Luo uuden tietokannan nimellä 'tehokkuus.db' ja ottaa tietokantaan yhteyden
+        this.db = DriverManager.getConnection("jdbc:sqlite:tehokkuus.db");
+        createTables();
+        try {
+            System.out.println("Tehokkuustesti..");
+            System.out.println("Tietokantaan lisätään tuhat käyttäjää, tuhat paikkaa ja miljoona tapahtumaa (Vaiheet 1-4)");
+            Statement s = db.createStatement();
+            s.execute("BEGIN TRANSACTION");
+            long t1 = System.nanoTime();
+            for (int i = 1; i < 1001; i++) {
+                PreparedStatement p = db.prepareStatement("INSERT INTO Asiakkaat (nimi) VALUES (?)");
+                PreparedStatement p2 = db.prepareStatement("INSERT INTO Paikat (paikannimi) VALUES (?)");
+                p.setString(1, ("A" + i));
+                p2.setString(1, ("P" + i));
+                try {
+                    p.execute();
+                    p2.execute();
+
+                } catch (SQLException e) {
+                    System.out.println(e);
+                    break;
+                }
+
+            }
+            String kuvaus = "-";
+            for (int i = 1; i < 1000001; i++) {
+                PreparedStatement p3 = db.prepareStatement("INSERT INTO Tapahtumat (paikka_id,paketti_id,date,kuvaus) VALUES (?,?,datetime(),?)");
+                p3.setInt(1, 100);
+                p3.setInt(2, 100);
+                p3.setString(3, kuvaus);
+                try {
+                    p3.execute();
+                } catch (SQLException e) {
+                    System.out.println(e);
+                    break;
+                }
+            }
+            long t2 = System.nanoTime();
+            s.execute("COMMIT");
+
+            System.out.println("Aikaa kului (1-4): " + (t2 - t1) / 1e9 + " sekuntia");
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        // Sulkee yhteyden tehokkuustesti-tietokantaan ja ottaa yhteyden alkuperäiseen tietokantaan
+        this.db.close();
+        this.db = DriverManager.getConnection(connectionName);
     }
 
     public void createTables() throws SQLException {

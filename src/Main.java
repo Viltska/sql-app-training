@@ -5,7 +5,7 @@ public class Main {
 
     public static void main(String[] args) throws SQLException {
         Scanner lukija = new Scanner(System.in);
-        String databaseName = "tikape.db";
+        String databaseName = "tehokkuus.db";
         System.out.println("Current database: " + databaseName);
         DatabaseManager manager = new DatabaseManager(databaseName);
 
@@ -19,6 +19,7 @@ public class Main {
         System.out.println("5: Hae paketin tapahtumat");
         System.out.println("6: Hae asiakkaan paketit");
         System.out.println("7: Hae paikan tapahtumien määrä päivämäärällä");
+        System.out.println("8: Tehokkuus testi");
         System.out.println("9: Luo tietokannan ja/tai puuttuvat taulukot");
         System.out.println("0: Lopettaa ohjelman");
         System.out.println("");
@@ -79,6 +80,9 @@ public class Main {
                 System.out.print("Syötä paikannimi: ");
                 String paikannimi = lukija.nextLine();
                 manager.haePaikanTapahtumatPaivamaaralla(pvm, paikannimi);
+            }
+            if (komento.equals("8")) {
+                manager.tehokkuusTesti();
             }
 
             if (komento.equals("9")) {

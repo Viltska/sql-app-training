@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2020.1.21)  12 FEB 2020 07:32
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2020.1.21)  12 FEB 2020 08:00
 entering extended mode
 **./ville_manninen.tex
 (ville_manninen.tex
@@ -480,32 +480,32 @@ File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 ("E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Main.java" [8] [9])
 ("E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/DatabaseManager.java"
-[10] [11]
+[10] [11] [12]
 Overfull \hbox (28.54872pt too wide) in paragraph at lines 122--123
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]  
  []
 
-[12] [13] [14]
+[13] [14]
 Overfull \hbox (71.54854pt too wide) in paragraph at lines 234--235
 [][][][][][][][][][][][][][][][][][][][]  
  []
 
-
+[15]
 Overfull \hbox (71.54854pt too wide) in paragraph at lines 243--244
 [][][][][][][][][][][][][][][][][][][][]  
  []
 
-[15]) ("E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Asiakkaat.java"
+) ("E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Asiakkaat.java"
 [16]) ("E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Paikat.java"
-[17]) ("E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Paketit.java"
-[18] [19] [20])
+[17] [18]) ("E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Paketit.java
+" [19] [20])
 ("E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Tapahtumat.java"
 [21]) [22] (ville_manninen.aux) ) 
 Here is how much of TeX's memory you used:
- 5412 strings out of 492482
- 74596 string characters out of 3130996
+ 5417 strings out of 492482
+ 74663 string characters out of 3130996
  397101 words of memory out of 3000000
- 9648 multiletter control sequences out of 15000+200000
+ 9653 multiletter control sequences out of 15000+200000
  40402 words of font info for 36 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  30i,6n,40p,410b,1837s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -516,7 +516,7 @@ ram Files/MiKTeX 2.9/fonts/type1/public/lm/lmbx10.pfb><C:/Program Files/MiKTeX
 ublic/lm/lmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmr12.pfb
 ><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmr17.pfb><C:/Program Files
 /MiKTeX 2.9/fonts/type1/public/lm/lmtt10.pfb>
-Output written on ville_manninen.pdf (22 pages, 206738 bytes).
+Output written on ville_manninen.pdf (22 pages, 206905 bytes).
 PDF statistics:
  104 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

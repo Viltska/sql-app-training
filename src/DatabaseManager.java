@@ -2,6 +2,7 @@
 import java.io.File;
 import java.sql.Connection;
 import java.sql.*;
+import java.util.Random;
 
 public class DatabaseManager {
 
@@ -25,7 +26,6 @@ public class DatabaseManager {
     }
 
     public void uusiAsiakas(String nimi) throws SQLException {
-        // Tarkistetaan että syöte ei ole tyhjä
         if (!nimi.isEmpty()) {
             this.asiakkaat.uusiAsiakas(nimi);
         } else {
@@ -34,7 +34,6 @@ public class DatabaseManager {
     }
 
     public void uusiPaikka(String nimi) throws SQLException {
-        // Tarkistetaan että syöte ei ole tyhjä
         if (!nimi.isEmpty()) {
             this.paikat.uusiPaikka(nimi);
         } else {
@@ -44,78 +43,45 @@ public class DatabaseManager {
 
     public void uusiPaketti(String asiakas, String seurantakoodi) throws SQLException {
         if (!asiakas.isEmpty() && !seurantakoodi.isEmpty()) {
-            int asiakas_id = asiakkaat.getID(asiakas);
-            if (asiakas_id != -1) {
-                paketit.uusiPaketti(asiakas_id, seurantakoodi);
-            } else {
-                System.out.println("Asiakasta ei löytynyt");
-            }
+            paketit.uusiPaketti(asiakas, seurantakoodi);
         } else {
-            System.out.println("Asiakkaan nimi tai seurantakoodi eivät saa olla tyhiä");
+            System.out.println("Syöte ei saa olla tyhjä");
         }
     }
 
     public void uusiTapahtuma(String paikka, String seurantaKoodi, String kuvaus) throws SQLException {
-        // Tarkistetaan että syötteet eivät ole tyhjä
         if (!paikka.isEmpty() && !seurantaKoodi.isEmpty() && !kuvaus.isEmpty()) {
-            int paikka_id = paikat.getPaikkaID(paikka);
-            int paketti_id = paketit.getID(seurantaKoodi);
-            // Tarkistetaan että paikka ja paketti löytyvät tietokannasta
-            if (paikka_id != -1) {
-                if (paketti_id != -1) {
-                    tapahtumat.uusiTapahtuma(paikka_id, paketti_id, kuvaus);
-                } else {
-                    System.out.println("Seurantakoodilla ei löytynyt pakettia");
-                }
-            } else {
-                System.out.println("Paikkaa ei löytynyt");
-            }
-
+            tapahtumat.uusiTapahtuma(paikka, seurantaKoodi, kuvaus);
         } else {
             System.out.println("Syöteet eivät saa olla tyhjä");
         }
-
     }
 
     public void haePaketinTapahtumat(String seurantaKoodi) throws SQLException {
-        // Tarkistetaan että syöte ei ole tyhjä
         if (!seurantaKoodi.isEmpty()) {
-            int paketti_id = paketit.getID(seurantaKoodi);
-
-            // Tarkistetaan että paketti löytyy tietokannasta
-            if (paketti_id != -1) {
-                try {
-                    System.out.println("Paketin: " + seurantaKoodi + ", ID: " + paketti_id + ", tapahtumat:");
-                    paketit.haePaketinTapahtumat(paketti_id);
-                } catch (SQLException e) {
-                    System.out.println(e);
-                }
-            } else {
-                System.out.println("Pakettia ei löytynyt");
+            try {
+                System.out.println("Paketin (" + seurantaKoodi + ") tapahtumat:");
+                paketit.haePaketinTapahtumat(seurantaKoodi);
+            } catch (SQLException e) {
+                System.out.println(e);
             }
+
         } else {
             System.out.println("Syöte ei saa olla tyhjä");
         }
     }
 
     public void haeAsiakkaanPaketit(String asiakas) throws SQLException {
-        int asiakkaan_id = asiakkaat.getID(asiakas);
-        // Tarkistetaan että syöte ei ole tyhjä
         if (!asiakas.isEmpty()) {
-            // Tarkistetaan että asiakas löytyy tietokannasta
-            if (asiakkaan_id != -1) {
-                try {
-                    asiakkaat.haeAsiakkaanPaketit(asiakkaan_id);
-                } catch (SQLException e) {
-                    System.out.println(e);
-                }
-            } else {
-                System.out.println("Asiakasta ei löytynyt tietokannasta");
+            try {
+                asiakkaat.haeAsiakkaanPaketit(asiakas);
+            } catch (SQLException e) {
+                System.out.println(e);
             }
-
         } else {
             System.out.println("Syöte ei saa olla tyhjä");
         }
+
     }
 
     public void haePaikanTapahtumatPaivamaaralla(String paivamaara, String paikannimi) throws SQLException {
@@ -139,48 +105,82 @@ public class DatabaseManager {
         }
     }
 
-    // Tehokkuustesti (Performance test)
     public void tehokkuusTesti(boolean poistetaan) throws SQLException {
-        //Luo uuden tietokannan nimellä 'tehokkuus.db' ja ottaa tietokantaan yhteyden
+        //Luodaan testi tietokanta 'tehokkuus.db'
         this.db = DriverManager.getConnection("jdbc:sqlite:tehokkuus.db");
         createTables();
         Statement s = db.createStatement();
         db.setAutoCommit(false);
+        Random rand = new Random(1137);
 
+        //Tehokkuus testi
+        System.out.println("");
+        System.out.println("Tehokkuustesti: ");
+        System.out.println("");
         try {
-            System.out.println("Tehokkuustesti..");
-            System.out.println("Tietokantaan lisätään tuhat käyttäjää, tuhat paikkaa ja miljoona tapahtumaa (Vaiheet 1-4)");
 
+            // 1. Asiakkaiden lisäys
             long t1 = System.nanoTime();
             for (int i = 1; i < 1001; i++) {
                 PreparedStatement p = db.prepareStatement("INSERT INTO Asiakkaat (nimi) VALUES (?)");
-                PreparedStatement p2 = db.prepareStatement("INSERT INTO Paikat (paikannimi) VALUES (?)");
                 p.setString(1, ("A" + i));
-                p2.setString(1, ("P" + i));
-                try {
-                    p.execute();
-                    p2.execute();
+                p.execute();
 
-                } catch (SQLException e) {
-                    System.out.println(e);
-                }
-
-            }
-            String kuvaus = "-";
-            for (int i = 1; i < 1000001; i++) {
-                PreparedStatement p3 = db.prepareStatement("INSERT INTO Tapahtumat (paikka_id,paketti_id,date,kuvaus) VALUES (?,?,datetime(),?)");
-                p3.setInt(1, 100);
-                p3.setInt(2, 100);
-                p3.setString(3, kuvaus);
-                try {
-                    p3.execute();
-                } catch (SQLException e) {
-                    System.out.println(e);
-                }
             }
             long t2 = System.nanoTime();
+            System.out.println("Lisätty 1000 asiakasta ajassa: " + (t2 - t1) / 1e9 + "s.");
 
-            System.out.println("Aikaa kului (1-4): " + (t2 - t1) / 1e9 + " sekuntia");
+            // 2. Paikkojen lisäys
+            for (int i = 1; i < 1001; i++) {
+                PreparedStatement p = db.prepareStatement("INSERT INTO Paikat (paikannimi) VALUES (?)");
+                p.setString(1, ("P" + i));
+                p.execute();
+            }
+            long t3 = System.nanoTime();
+            System.out.println("Lisätty 1000 paikkaa ajassa: " + (t3 - t2) / 1e9 + "s.");
+
+            // 3. Pakettien lisäys
+            for (int i = 1; i < 1001; i++) {
+                PreparedStatement p = db.prepareStatement("INSERT INTO Paketit (asiakas_id,seurantakoodi) VALUES ((SELECT id FROM Asiakkaat WHERE nimi = ?),?)");
+                p.setString(1, ("A" + i));
+                p.setString(2, ("koodi" + i));
+                p.execute();
+            }
+            long t4 = System.nanoTime();
+            System.out.println("Lisätty 1000 pakettia ajassa: " + (t4 - t3) / 1e9 + "s.");
+
+            // 4. Tapahtumien lisäys
+            for (int i = 1; i < 1000001; i++) {
+                PreparedStatement p = db.prepareStatement("INSERT INTO Tapahtumat (paikka_id,paketti_id,date,kuvaus) VALUES (?,?,datetime(),'testi')");
+                int j = rand.nextInt(1000) + 1;
+                p.setInt(1, j);
+                p.setInt(2, j);
+                p.execute();
+
+            }
+            long t5 = System.nanoTime();
+            System.out.println("Lisätty 1000 000 tapahtumaa ja pakettia ajassa: " + (t5 - t4) / 1e9 + "s.");
+
+            // 5. Asiakkaan pakettien määrä
+            for (int i = 1; i < 1001; i++) {
+                PreparedStatement p = db.prepareStatement("SELECT COUNT(*) FROM Paketit, Asiakkaat WHERE Paketit.asiakas_id = Asiakkaat.id AND Asiakkaat.nimi = ?");
+                p.setString(1, ("A" + i));
+                ResultSet r = p.executeQuery();
+            }
+            long t6 = System.nanoTime();
+            System.out.println("Haettu 1000 asiakkaan pakettien määrä ajassa: " + (t6 - t5) / 1e9 + "s.");
+            s.execute("CREATE INDEX idx_paketti ON Tapahtumat (paketti_id)");
+
+            // 6. Paketin tapahtumien määrä
+            for (int i = 1; i < 1001; i++) {
+                int j = rand.nextInt(1000) + 1;
+                PreparedStatement p = db.prepareStatement("SELECT COUNT(*) FROM Tapahtumat, Paketit WHERE Tapahtumat.paketti_id = Paketit.id AND Paketit.id = ?");
+                p.setInt(1, j);
+                ResultSet r = p.executeQuery();
+            }
+            long t7 = System.nanoTime();
+            System.out.println("Haettu 1000 paketin tapahtumien määrä ajassa: " + (t7 - t6) / 1e9 + "s.");
+
         } catch (SQLException e) {
             System.out.println(e);
         }

@@ -4,19 +4,17 @@ import java.sql.*;
 public class Tapahtumat {
 
     private final Connection db;
-    private final Statement s;
 
     public Tapahtumat(Connection db) throws SQLException {
         this.db = db;
-        this.s = db.createStatement();
 
     }
 
-    public void uusiTapahtuma(int paikka_id, int paketti_id, String kuvaus) throws SQLException {
+    public void uusiTapahtuma(String paikannimi, String seurantaKoodi, String kuvaus) throws SQLException {
         try {
-            PreparedStatement p = db.prepareStatement("INSERT INTO Tapahtumat (paikka_id,paketti_id,date,kuvaus) VALUES (?,?,datetime(),?)");
-            p.setInt(1, paikka_id);
-            p.setInt(2, paketti_id);
+            PreparedStatement p = db.prepareStatement("INSERT INTO Tapahtumat (paikka_id,paketti_id,date,kuvaus) VALUES ((SELECT id FROM Paikat WHERE paikannimi = ?),(SELECT id FROM Paketit WHERE seurantakoodi = ?),datetime(),?)");
+            p.setString(1, paikannimi);
+            p.setString(2, seurantaKoodi);
             p.setString(3, kuvaus);
             p.executeUpdate();
             System.out.println("Tapahtuma lisätty");

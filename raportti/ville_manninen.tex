@@ -71,27 +71,29 @@ Harjoitustyö on moniluokkainen komentoriviohjelma jonka avulla voidaan tallenta
 \subsection*{Ohjelman ominaisuudet}
 Ohjelmalla on kirjoitushetkellä seuraavat ominaisuudet.
 \begin{itemize}
-\item Tietokannan ja tyhjien taulujen luominen.
-\item Asiakkaiden lisääminen tietokantaan nimellä.
-\item Paikan lisäämien tietokantaan nimellä.
-\item Paketin lisääminen tietokantaan käyttäen asiakkaan nimeä.
-\item Tapahtuman lisääminen tietokantaan käyttäen paikannimeä ja paketin seurantakoodia.
-\item Paketin tapahtumien hakeminen.
+\item Ohjelman tietokannan luominen kun tietokanta puuttuu tai on puutteellinen.
+\item Asiakkaiden lisääminen tietokantaan.
+\item Paikkojen lisäämien tietokantaan.
+\item Pakettien lisääminen tietokantaan.
+\item Tapahtumien lisääminen tietokantaan.
+\item Pakettien tapahtumien hakeminen.
 \item Asiakkaan pakettien hakeminen ja yksittäisten pakettien tapahtumien lukumäärä.
-\item Tapahtumien määrän hakeminen paikasta tietyllä päivämäärällä.
+\item Tapahtumien määrän hakeminen halutusta paikasta päivämäärällä.
 \end{itemize}
 \newpage
 \subsection*{Komentorivi komennot}
-Ohjelmalle annetaan komentoja käyttämällä komennoille merkittyä numeroa.
+Ohjelmalle annetaan syöttämällä komentoriville komentoa kuvaava numero(0-9).
 \begin{description}
-\item Komento \textbf{1} lisää uuden asiakkaan tietokantaan
-\item Komento \textbf{2} lisää uuden paikan tietokantaan
-\item Komento \textbf{3} lisää uuden paketin tietokantaan
-\item Komento \textbf{4} lisää uuden tapahtuman tietokantaan
-\item Komento \textbf{5} tulostaa paketin tapahtumat tietokannasta
-\item Komento \textbf{6} tulostaa asiakkaan paketit ja niihin liittyvien tapahtumien määrän tietokannasta
-\item Komento \textbf{7} tulostaa tapahtumien määrän haku paikasta tietyllä päivämäärällä tietokannasta
-\item Komento \textbf{0} Sulkee ohjelman 
+\item \textbf{1} lisää uuden asiakkaan tietokantaan.
+\item \textbf{2} lisää uuden paikan tietokantaan.
+\item \textbf{3} lisää uuden paketin tietokantaan.
+\item \textbf{4} lisää uuden tapahtuman tietokantaan.
+\item \textbf{5} tulostaa paketin tapahtumat tietokannasta.
+\item \textbf{6} tulostaa asiakkaan paketit ja niihin liittyvien tapahtumien määrän tietokannasta.
+\item \textbf{7} tulostaa tapahtumien määrän haku paikasta tietyllä päivämäärällä tietokannasta.
+\item \textbf{8} suorittaa tehokkuustestin ja tulostaa testin tulokset käyttäjälle.
+\item \textbf{9} luo tietokannan.
+\item \textbf{0} Sulkee ohjelman.
 \end{description}
 
 \newpage
@@ -102,8 +104,20 @@ Ohjelmalle annetaan komentoja käyttämällä komennoille merkittyä numeroa.
 
 \newpage
 \section{Tehokkuustesti}
+Ohjelmaan sisältyy automaattinen tehokkuustesti jonka avulla voidaan testata tietokannan tehokkuutta. Tehokkuustesti suorittaa ennalta määriteltyjä muutoksia tietokantaan ja ilmoittaa niihin käytetyn ajan. Testi koostuu kuudesta eri vaiheesta. 
+
+Testin vaiheissa yhdestä neljään tietokantaan lisätään tuhat asiakasta, paikkaa ja pakettia. Seuraavaksi tietokantaan lisätään miljoona tapahtumaa käyttäen satunnaisesti tietokantaan lisättyjä arvoja. Viimeisissä vaiheissa viisi ja kuusi testi suorittaa kyselyitä joissa haetaan tuhannen asiakkaan pakettien määrä, sekä tuhannen paketin tapahtumien määrä.
+
 \subsection*{Ilman indeksejä}
+Ohjelmaa testatessa ilman ohjelmoituja hakemistorakenteita tuhannen arvon lisääminen tapahtui alle sekunnissa, ja miljoonaa arvoa lisätessä aikaa kului 10-12 sekunttia. 
+
+Kyselyitä suorittaessa tehokkuuteen vaikutti merkittävästi haettavan taulukon koko. Haettaessa asiakkaan pakettien määrää tuhannen arvon taulukosta aikaa kului alle sekuntti, Kun haettiin paketin tapahtumien määrää miljoonan arvon taulukosta aikaa kului noin minuutti.
+
+
 \subsection*{Indeksien lisäämisen jälkeen}
+Seuraavaksi ohjelman tehokkuustestiin lisättiin hakemistorakenne jonka avulla tapahtumat taulukolle luotiin indksi sarakkeen arvoille 'paketti.id'. Lisäyksen jälkeen tapahtumien haku paketin arvolla toimii huomattavasti tehokkaammin, lisäämisen jälkeen paketin tapahtumien määrän hakeminen, johon ennen kului aikaa yli minuutin, tapahtui alle sekunnissa.
+
+Huomattavaa oli myös se missä kohdassa testiä indeksi lisättiin, kun indeksi lisättiin ennen miljoonan tapahtuman lisäämistä mainittujen tapahtumien luomiseen kului tuplasti enemmän aikaa. 
 
 \newpage
 \section{Tietokannan eheys}

@@ -9,11 +9,10 @@ public class Paketit {
         this.db = db;
     }
 
-    public void uusiPaketti(int asiakas_id, String seurantakoodi) throws SQLException {
-        //Paketin seurantakoodi ei saa löytyä tietokannasta
+    public void uusiPaketti(String asiakas, String seurantakoodi) throws SQLException {
         try {
-            PreparedStatement p = db.prepareStatement("INSERT INTO Paketit (asiakas_id,seurantakoodi) VALUES (?,?)");
-            p.setInt(1, asiakas_id);
+            PreparedStatement p = db.prepareStatement("INSERT INTO Paketit (asiakas_id,seurantakoodi) VALUES ((SELECT id FROM Asiakkaat WHERE nimi = ?),?)");
+            p.setString(1, asiakas);
             p.setString(2, seurantakoodi);
             p.executeUpdate();
             System.out.println("Paketti lisätty");
@@ -24,7 +23,6 @@ public class Paketit {
     }
 
     public int getID(String seurantaKoodi) throws SQLException {
-        // Palauttaa arvon -1 jos pakettia ei löydy tietokannasta
         try {
             PreparedStatement p = db.prepareStatement("SELECT id FROM Paketit WHERE seurantakoodi = ?");
             p.setString(1, seurantaKoodi);
@@ -45,14 +43,14 @@ public class Paketit {
 
     }
 
-    public void haePaketinTapahtumat(int paketti_id) throws SQLException {
+    public void haePaketinTapahtumat(String seurantaKoodi) throws SQLException {
         int kertoja = 1;
         try {
             PreparedStatement p = db.prepareStatement("SELECT date, paikannimi, kuvaus FROM Tapahtumat \n"
                     + "JOIN Paketit ON Paketit.id = Tapahtumat.paketti_id\n"
                     + "JOIN Paikat ON Tapahtumat.paikka_id = Paikat.id\n"
-                    + "WHERE Paketit.id = ?");
-            p.setInt(1, paketti_id);
+                    + "WHERE Paketit.id = (SELECT id FROM Paketit WHERE seurantakoodi = ?)");
+            p.setString(1, seurantaKoodi);
             ResultSet r = p.executeQuery();
 
             if (r.next() == false) {
@@ -77,7 +75,6 @@ public class Paketit {
     }
 
     public int paketinTapahtumienMaara(int paketti_id) throws SQLException {
-        //Palauttaa arvon -1 jos pakettia ei löydy tietokannasta
         try {
             PreparedStatement p = db.prepareStatement("SELECT COUNT(*) FROM Tapahtumat, Paikat, Paketit WHERE Tapahtumat.paikka_id = Paikat.id AND Tapahtumat.paketti_id = Paketit.id AND Paketit.id = ?");
             p.setInt(1, paketti_id);

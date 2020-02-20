@@ -26,7 +26,7 @@ public class Main {
         System.out.println("");
 
         while (true) {
-            System.out.print("Syötä komento: ");
+            System.out.print("Syötä komento (0-9): ");
             String komento = lukija.nextLine();
             if (komento.equals("0")) {
                 manager.tikapePrint();
@@ -83,7 +83,7 @@ public class Main {
                 manager.haePaikanTapahtumatPaivamaaralla(pvm, paikannimi);
             }
             if (komento.equals("8")) {
-                System.out.print("Tallennetaanko testin taulukot? (Y/N): ");
+                System.out.print("Tallennetaanko testin aikana tehdyt muutokset taulukkoon? (Y/N): ");
                 String yesno = lukija.nextLine();
                 boolean poistetaan = false;
                 if (yesno.equals("N") || yesno.equals("n")) {

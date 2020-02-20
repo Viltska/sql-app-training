@@ -1,3 +1,4 @@
+
 import java.sql.*;
 
 public class Asiakkaat {
@@ -20,9 +21,8 @@ public class Asiakkaat {
     }
 
     public int getID(String asiakas) throws SQLException {
-        //Palauttaa -1 jos asiakasta ei löydy tietokannasta
         try {
-            PreparedStatement p = db.prepareStatement("SELECT id FROM Asiakkaat WHERE nimi=?");
+            PreparedStatement p = db.prepareStatement("SELECT id FROM Asiakkaat WHERE nimi = ?");
             p.setString(1, asiakas);
 
             ResultSet r = p.executeQuery();
@@ -41,13 +41,13 @@ public class Asiakkaat {
 
     }
 
-    public void haeAsiakkaanPaketit(int asiakas_id) throws SQLException {
+    public void haeAsiakkaanPaketit(String asiakas) throws SQLException {
         try {
             PreparedStatement p = db.prepareStatement("SELECT seurantakoodi, COUNT(Tapahtumat.paketti_id) FROM Paketit\n"
                     + "LEFT JOIN Tapahtumat ON Tapahtumat.paketti_id = Paketit.id\n"
                     + "LEFT JOIN Asiakkaat ON Asiakkaat.id = Paketit.asiakas_id\n"
-                    + "GROUP BY Paketit.seurantakoodi HAVING Paketit.asiakas_id = ?");
-            p.setInt(1, asiakas_id);
+                    + "GROUP BY Paketit.seurantakoodi HAVING Paketit.asiakas_id = (SELECT id FROM Asiakkaat WHERE nimi = ?)");
+            p.setString(1, asiakas);
             ResultSet r = p.executeQuery();
 
             if (r.next() == false) {

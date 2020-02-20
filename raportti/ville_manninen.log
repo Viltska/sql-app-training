@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2020.1.21)  12 FEB 2020 09:00
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2020.1.21)  20 FEB 2020 22:48
 entering extended mode
 **./ville_manninen.tex
 (ville_manninen.tex
@@ -475,20 +475,38 @@ university-of-helsinki-2-eps-converted-to.pdf>] (ville_manninen.toc)
 \openout3 = `ville_manninen.toc'.
 
  [2]
-[3] [4] [5] [6] [7]
+[3]
+Overfull \hbox (6.03401pt too wide) in paragraph at lines 85--86
+\T1/lmr/m/n/10.95 Ohjelmalle an-ne-taan syöt-tä-mäl-lä ko-men-to-ri-vil-le ko-m
+en-toa ku-vaa-va numero(0-
+ []
+
+[4] [5]
+Overfull \hbox (3.81396pt too wide) in paragraph at lines 114--115
+[]\T1/lmr/m/n/10.95 Kyselyitä suo-rit-taes-sa te-hok-kuu-teen vai-kut-ti mer-ki
+t-tä-väs-ti haet-ta-van tau-
+ []
+
+
+Overfull \hbox (4.14912pt too wide) in paragraph at lines 118--119
+\T1/lmr/m/n/10.95 Seuraavaksi oh-jel-man te-hok-kuus-tes-tiin li-sät-tiin ha-ke
+-mis-to-ra-ken-ne jon-ka avul-
+ []
+
+[6] [7]
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 1
-21.
+35.
  ("C:\Program Files\MiKTeX 2.9\tex/latex/lm\t1lmtt.fd"
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 ("E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Main.java" [8] [9])
 ("E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/DatabaseManager.java"
-[10] [11] [12]
-Overfull \hbox (28.54872pt too wide) in paragraph at lines 122--123
+[10] [11]
+Overfull \hbox (28.54872pt too wide) in paragraph at lines 88--89
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]  
  []
 
-[13] [14]
+[12] [13] [14]
 Overfull \hbox (71.54854pt too wide) in paragraph at lines 234--235
 [][][][][][][][][][][][][][][][][][][][]  
  []
@@ -499,16 +517,16 @@ Overfull \hbox (71.54854pt too wide) in paragraph at lines 243--244
  []
 
 ) ("E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Asiakkaat.java"
-[16]) ("E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Paikat.java"
-[17] [18]) ("E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Paketit.java
-" [19] [20])
+[16] [17]) ("E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Paikat.java"
+[18]) ("E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Paketit.java"
+[19] [20])
 ("E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Tapahtumat.java"
 [21]) [22] (ville_manninen.aux) ) 
 Here is how much of TeX's memory you used:
- 5443 strings out of 492482
- 74942 string characters out of 3130996
- 397101 words of memory out of 3000000
- 9668 multiletter control sequences out of 15000+200000
+ 5448 strings out of 492482
+ 74969 string characters out of 3130996
+ 386101 words of memory out of 3000000
+ 9673 multiletter control sequences out of 15000+200000
  57307 words of font info for 47 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  30i,11n,40p,410b,1837s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -521,7 +539,7 @@ ublic/lm/lmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmr12.pfb
 /MiKTeX 2.9/fonts/type1/public/lm/lmr6.pfb><C:/Program Files/MiKTeX 2.9/fonts/t
 ype1/public/lm/lmr8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmr9
 .pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmtt10.pfb>
-Output written on ville_manninen.pdf (22 pages, 258611 bytes).
+Output written on ville_manninen.pdf (22 pages, 260218 bytes).
 PDF statistics:
  116 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

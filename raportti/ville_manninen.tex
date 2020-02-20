@@ -109,7 +109,7 @@ Ohjelmaan sisältyy automaattinen tehokkuustesti jonka avulla voidaan testata ti
 Testin vaiheissa yhdestä neljään tietokantaan lisätään tuhat asiakasta, paikkaa ja pakettia. Seuraavaksi tietokantaan lisätään miljoona tapahtumaa käyttäen satunnaisesti tietokantaan lisättyjä arvoja. Viimeisissä vaiheissa viisi ja kuusi testi suorittaa kyselyitä joissa haetaan tuhannen asiakkaan pakettien määrä, sekä tuhannen paketin tapahtumien määrä.
 
 \subsection*{Ilman indeksejä}
-Ohjelmaa testatessa ilman ohjelmoituja hakemistorakenteita tuhannen arvon lisääminen tapahtui alle sekunnissa, ja miljoonaa arvoa lisätessä aikaa kului 10-12 sekunttia. 
+Ohjelmaa testatessa ilman lisättyjä hakemistorakenteita tuhannen arvon lisääminen tapahtui alle sekunnissa, ja miljoonaa arvoa lisätessä aikaa kului 10-12 sekunttia. 
 
 Kyselyitä suorittaessa tehokkuuteen vaikutti merkittävästi haettavan taulukon koko. Haettaessa asiakkaan pakettien määrää tuhannen arvon taulukosta aikaa kului alle sekuntti, Kun haettiin paketin tapahtumien määrää miljoonan arvon taulukosta aikaa kului noin minuutti.
 
@@ -122,7 +122,7 @@ Huomattavaa oli myös se missä kohdassa testiä indeksi lisättiin, kun indeksi
 \newpage
 \section{Tietokannan eheys}
 Ohjelman tietokannan eheyttä pidetään yllä käyttämällä SQLiten sekä Javan tarjoamia ominaisuuksia.
-Tietokantaan ei ole mahdollista luoda samannimisiä asiakkaita tai paikkoja, eikä tietokantaan luoduille paketeille saa antaa samaa seurantakoodia. Samannimisiä syötteitä valvotaan SQLiten rajoitteella UNIQUE, joka varmistaa ettei samaan tauluun lisätä samannimisiä arvoja. Lisäksi SQLiten rajoitteella NOT NULL valvotaan että sarakkeisiin ei lisätä tyhjiä arvoja.
+Tietokantaan ei ole mahdollista luoda samannimisiä asiakkaita tai paikkoja, eikä tietokantaan luoduille paketeille saa antaa samaa seurantakoodia. Samannimisiä syötteitä valvotaan SQLiten rajoitteella UNIQUE, joka varmistaa ettei samaan tauluun lisätä samannimisiä arvoja. Lisäksi SQLiten rajoitteella NOT NULL valvotaan että sarakkeisiin ei lisätä tyhjiä arvoja, tätä käytetään hyväksi esimerkiksi kun lisätään arvoja jotka viittaavat muihin sarakkeisiin, alikysely palauttaa arvon NULL jos arvoa johon viitataan ei löydy tietokannasta.
  
 Java-ohjelma tarkistaa käyttäjän antamat syötteet ja ilmoittaa syyn jos annettu syöte on puutteellinen, esimerkiksi jos käyttäjän syöte on tyhjä. Tietokantaan lisättäessä paketteja tai tapahtumia jotka viittaavat muualle tallennettuun tietoon, sovellus varmistaa että annetut viitteet löytyvät tietokannasta.
 

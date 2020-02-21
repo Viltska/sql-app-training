@@ -141,12 +141,13 @@ public class DatabaseManager {
             // 4. Tapahtumien lisäys
             for (int i = 1; i < 1000001; i++) {
                 // PreparedStatement p = db.prepareStatement("INSERT INTO Tapahtumat (paikka_id,paketti_id,date,kuvaus) VALUES (?,?,datetime(),'testi')");
-                PreparedStatement p = db.prepareStatement("INSERT INTO Tapahtumat (paikka_id,paketti_id,date,kuvaus) VALUES ((SELECT id FROM Paikat WHERE paikannimi = ?),(SELECT id FROM Paketit WHERE seurantakoodi = ?),datetime(),?)");
+                PreparedStatement p = db.prepareStatement("INSERT INTO Tapahtumat (paikka_id,paketti_id,date,kuvaus)"
+                        + " VALUES ((SELECT id FROM Paikat WHERE paikannimi = ?),(SELECT id FROM Paketit WHERE seurantakoodi = ?),datetime(),?)");
                 int j = rand.nextInt(1000) + 1;
                 p.setString(1, ("P" + j));
                 p.setString(2, ("koodi" + j));
                 p.setString(3, ("testi" + i));
-                p.executeUpdate();
+                p.execute();
 
             }
 
@@ -163,15 +164,17 @@ public class DatabaseManager {
             long t6 = System.nanoTime();
             System.out.println("Haettu 1000 asiakkaan pakettien määrä ajassa: " + (t6 - t5) / 1e9 + "s.");
 
-            s.execute("CREATE INDEX idx_paketti ON Tapahtumat(paketti_id)");
-
             // 6. Paketin tapahtumien määrä
             for (int i = 1; i < 1001; i++) {
                 int j = rand.nextInt(1000) + 1;
-                PreparedStatement p = db.prepareStatement("SELECT COUNT(*) FROM Tapahtumat, Paketit WHERE Tapahtumat.paketti_id = Paketit.id AND Paketit.id = ?");
-                p.setInt(1, j);
+                PreparedStatement p = db.prepareStatement("SELECT COUNT(*) FROM Tapahtumat, Paketit WHERE Tapahtumat.paketti_id = Paketit.id AND Paketit.seurantakoodi = ?");
+                p.setString(1, ("koodi" + j));
                 ResultSet r = p.executeQuery();
+                do {
+                    System.out.print(r.getInt("COUNT(*)"+ " "));
+                } while (r.next());
             }
+            System.out.println("");
             long t7 = System.nanoTime();
             System.out.println("Haettu 1000 paketin tapahtumien määrä ajassa: " + (t7 - t6) / 1e9 + "s.");
 
@@ -193,39 +196,53 @@ public class DatabaseManager {
 
     public void createTables() throws SQLException {
         Statement s = db.createStatement();
+        System.out.println("");
         try {
             s.execute("CREATE TABLE Asiakkaat (id INTEGER PRIMARY KEY, nimi TEXT NOT NULL UNIQUE)");
             System.out.println("Luotu taulukko 'Asiakkaat'");
 
         } catch (SQLException e) {
-            System.out.println("Löytyi taulukko 'Asiakkaat'");
+            System.out.println("Taulukkoa 'Asiakkaat' ei voitu luoda");
             System.out.println(e);
         }
+        System.out.println("");
         try {
             s.execute("CREATE TABLE Paikat (id INTEGER PRIMARY KEY, paikannimi TEXT NOT NULL UNIQUE)");
             System.out.println("Luotu taulukko 'Paikat'");
 
         } catch (SQLException e) {
-            System.out.println("Löytyi taulukko 'Paikat'");
+            System.out.println("Taulukkoa 'Paikat' ei voitu luoda");
             System.out.println(e);
         }
+        System.out.println("");
         try {
+
             s.execute("CREATE TABLE Paketit (id INTEGER PRIMARY KEY, asiakas_id INTEGER NOT NULL, seurantakoodi TEXT NOT NULL UNIQUE)");
             System.out.println("Luotu taulukko 'Paketit'");
 
         } catch (SQLException e) {
-            System.out.println("Löytyi taulukko 'Paketit'");
+            System.out.println("Taulukkoa 'Paketit' ei voitu luoda");
             System.out.println(e);
         }
+        System.out.println("");
         try {
             s.execute("CREATE TABLE Tapahtumat (id INTEGER PRIMARY KEY, paikka_id INTEGER NOT NULL, paketti_id INTEGER NOT NULL, date DATETIME NOT NULL, kuvaus TEXT NOT NULL)");
             System.out.println("Luotu taulukko 'Tapahtumat'");
         } catch (SQLException e) {
-            System.out.println("Löytyi taulukko 'Tapahtumat'");
+            System.out.println("Taulukkoa 'Tapahtumat' ei voitu luoda");
+            System.out.println(e);
+        }
+        System.out.println("");
+        try {
+            s.execute("CREATE INDEX idx_paketti ON Tapahtumat(paketti_id)");
+            s.execute("CREATE INDEX idx_seurantakoodi ON Paketit(seurantakoodi)");
+            s.execute("CREATE INDEX idx_paikka ON Paikat(paikannimi)");
+            System.out.println("Indeksit luotu");
+        } catch (SQLException e) {
+            System.out.println("Indeksejä ei voitu luoda");
             System.out.println(e);
         }
         System.out.println("Tietokanta valmis.");
-
     }
 
     public void tikapePrint() {

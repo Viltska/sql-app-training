@@ -34,7 +34,7 @@ public class Tapahtumat {
                 System.out.println("Ei tapahtumia");
             } else {
                 do {
-                    System.out.println("Tapahtumia: " + r.getString("Tapahtumia"));
+                    System.out.println("Tapahtumia yhteensä (" + r.getString("Tapahtumia") + ")");
                 } while (r.next());
             }
         } catch (SQLException e) {

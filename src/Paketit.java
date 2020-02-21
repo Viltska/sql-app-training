@@ -17,30 +17,9 @@ public class Paketit {
             p.executeUpdate();
             System.out.println("Paketti lisätty");
         } catch (SQLException e) {
-            System.out.println("ongelma metodissa 'Paketit.uusiPaketti'");
+            System.out.println("Pakettia ei voitu lisätä");
             System.out.println(e);
         }
-    }
-
-    public int getID(String seurantaKoodi) throws SQLException {
-        try {
-            PreparedStatement p = db.prepareStatement("SELECT id FROM Paketit WHERE seurantakoodi = ?");
-            p.setString(1, seurantaKoodi);
-
-            ResultSet r = p.executeQuery();
-
-            if (r.next()) {
-                return r.getInt("id");
-
-            } else {
-                return -1;
-            }
-        } catch (SQLException e) {
-            System.out.println("Ongelma metodissa 'Paketit.getID'");
-            System.out.println(e);
-        }
-        return -1;
-
     }
 
     public void haePaketinTapahtumat(String seurantaKoodi) throws SQLException {
@@ -52,7 +31,6 @@ public class Paketit {
                     + "WHERE Paketit.id = (SELECT id FROM Paketit WHERE seurantakoodi = ?)");
             p.setString(1, seurantaKoodi);
             ResultSet r = p.executeQuery();
-
             if (r.next() == false) {
                 System.out.println("Paketilla ei ollut tapahtumia");
             } else {
@@ -64,14 +42,13 @@ public class Paketit {
                     System.out.println("Kuvaus: " + r.getString("kuvaus"));
                     System.out.println("----------------------");
                     kertoja++;
-
                 } while (r.next());
                 System.out.println("Tapahtumia yhteensä: " + (kertoja - 1));
             }
         } catch (SQLException e) {
+            System.out.println("Ongelma haettaessa paketin tapahtumia");
             System.out.println(e);
         }
-
     }
 
     public int paketinTapahtumienMaara(int paketti_id) throws SQLException {
@@ -79,16 +56,12 @@ public class Paketit {
             PreparedStatement p = db.prepareStatement("SELECT COUNT(*) FROM Tapahtumat, Paikat, Paketit WHERE Tapahtumat.paikka_id = Paikat.id AND Tapahtumat.paketti_id = Paketit.id AND Paketit.id = ?");
             p.setInt(1, paketti_id);
             ResultSet r = p.executeQuery();
-
             while (r.next()) {
                 return 0;
             }
-
         } catch (SQLException e) {
             System.out.println(e);
-
         }
         return -1;
     }
-
 }

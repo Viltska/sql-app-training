@@ -68,10 +68,12 @@ Harjoitustyön raportti}
 \section{Esittely}
 Harjoitustyö on moniluokkainen komentoriviohjelma jonka avulla voidaan tallentaa asiakkaita, paikkoja, paketteja ja niihin liittyviä tapahtumia tietokantaan. Tietokantaan voidaan suorittaa ennakkoon määriteltyjä kyselyita, kyselyiden tulokset tulostetaan käyttäjän komentoriville. Ohjelmaan tallennetut tiedot jäävät muistiin tietokantaan ohjelman sulkemisen jälkeen.
 
+Ohjelmointikielenä on Java ja ohjelmointiympäristönä on käyetty NetBeans ympäristöä.
+
 \subsection*{Ohjelman ominaisuudet}
-Ohjelmalla on kirjoitushetkellä seuraavat ominaisuudet.
+Ohjelmalla on seuraavat ominaisuudet.
 \begin{itemize}
-\item Ohjelman tietokannan luominen kun tietokanta puuttuu tai on puutteellinen.
+\item Tietokannan luominen kun tietokanta puuttuu tai on puutteellinen.
 \item Asiakkaiden lisääminen tietokantaan.
 \item Paikkojen lisäämien tietokantaan.
 \item Pakettien lisääminen tietokantaan.
@@ -79,6 +81,7 @@ Ohjelmalla on kirjoitushetkellä seuraavat ominaisuudet.
 \item Pakettien tapahtumien hakeminen.
 \item Asiakkaan pakettien hakeminen ja yksittäisten pakettien tapahtumien lukumäärä.
 \item Tapahtumien määrän hakeminen halutusta paikasta päivämäärällä.
+\item Tehokkuustestin suorittaminen.
 \end{itemize}
 \newpage
 \subsection*{Komentorivi komennot}
@@ -104,25 +107,23 @@ Ohjelmalle annetaan syöttämällä komentoriville komentoa kuvaava numero(0-9).
 
 \newpage
 \section{Tehokkuustesti}
-Ohjelmaan sisältyy automaattinen tehokkuustesti jonka avulla voidaan testata tietokannan tehokkuutta. Tehokkuustesti suorittaa ennalta määriteltyjä muutoksia tietokantaan ja ilmoittaa niihin käytetyn ajan. Testi koostuu kuudesta eri vaiheesta. 
+Ohjelmalla voidaan suorittaa tehokkuustesti jonka avulla voidaan testata tietokannan tehokkuutta. Tehokkuustesti suorittaa ennalta määriteltyjä muutoksia tietokantaan ja tulostaa testeihin käytetyn ajan. Tehokkuustesti luo uuden tietokannan johon testin aikana luodut arvot tallennetaan, testin jälkeen ohjelma palaa käyttämään vanhaa tietokantaa.
 
-Testin vaiheissa yhdestä neljään tietokantaan lisätään tuhat asiakasta, paikkaa ja pakettia. Seuraavaksi tietokantaan lisätään miljoona tapahtumaa käyttäen satunnaisesti tietokantaan lisättyjä arvoja. Viimeisissä vaiheissa viisi ja kuusi testi suorittaa kyselyitä joissa haetaan tuhannen asiakkaan pakettien määrä, sekä tuhannen paketin tapahtumien määrä.
+Testi koostuu kuudesta eri vaiheesta, testin vaiheissa yhdestä neljään tietokantaan lisätään tuhat asiakasta, paikkaa ja pakettia. Seuraavaksi tietokantaan lisätään miljoona tapahtumaa käyttäen satunnaisesti tietokantaan lisättyjä arvoja. Ohjelmaa testatessa tuhannen arvon lisääminen tapahtui alle sekunnin kymmenesosassa kun taas miljoonaa arvoa lisätessä aikaa kului 10-12 sekunttia, tästä nähdään että ohjelman tehokkuuteen vaikuttaa merkittävästi tietokantaan lisättävien arvojen määrä.
 
-\subsection*{Ilman indeksejä}
-Ohjelmaa testatessa ilman lisättyjä hakemistorakenteita tuhannen arvon lisääminen tapahtui alle sekunnissa, ja miljoonaa arvoa lisätessä aikaa kului 10-12 sekunttia. 
+Viimeisissä vaiheissa viisi ja kuusi testi suorittaa kyselyitä joissa haetaan tuhannen asiakkaan pakettien määrä, sekä tuhannen paketin tapahtumien määrä. Mainituissa vaiheissa testin tehokkuuteen vaikutti eniten indeksien käyttö.
 
-Kyselyitä suorittaessa tehokkuuteen vaikutti merkittävästi haettavan taulukon koko. Haettaessa asiakkaan pakettien määrää tuhannen arvon taulukosta aikaa kului alle sekuntti, Kun haettiin paketin tapahtumien määrää miljoonan arvon taulukosta aikaa kului noin minuutti.
+\subsection*{Ilman indeksiä}
+Ilman lisättyä indeksiä pakettien hakemiseen tietokannasta aikaa kului alle sekunnin, mutta tapahtumia haettaessa aikaa kuluikin yli minuutin. Tarkastelun jälkeen huomataan että tapahtumaa haettaessa SQLite suorittaa alikyselyn jokaisen tapahtuman kohdalla. Mainittu alikysely etsii paketit taulukosta nimellä haluttua pakettia, tämä käsittely hidastaa kyselyä merkittävästi.
 
-
-\subsection*{Indeksien lisäämisen jälkeen}
-Seuraavaksi ohjelman tehokkuustestiin lisättiin hakemistorakenne jonka avulla tapahtumat taulukolle luotiin indksi sarakkeen arvoille 'paketti.id'. Lisäyksen jälkeen tapahtumien haku paketin arvolla toimii huomattavasti tehokkaammin, lisäämisen jälkeen paketin tapahtumien määrän hakeminen, johon ennen kului aikaa yli minuutin, tapahtui alle sekunnissa.
-
-Huomattavaa oli myös se missä kohdassa testiä indeksi lisättiin, kun indeksi lisättiin ennen miljoonan tapahtuman lisäämistä mainittujen tapahtumien luomiseen kului tuplasti enemmän aikaa. 
+\subsection*{Indeksin lisäämisen jälkeen}
+Tehokkuuden lisäämiseksi voidaan paketin arvolle nimi luoda hakemistorakenne paketin nimelle. Käyttämällä SQLiten CREATE INDEX toimintoa, indeksin lisäämisen jälkeen tapahtuma kysely hakee nimellä paketin id-numeron tehokkaasti. Indeksin lisäämisen jälkeen tapahtuma kysely vei aikaa noin sekunnin.
 
 \newpage
 \section{Tietokannan eheys}
-Ohjelman tietokannan eheyttä pidetään yllä käyttämällä SQLiten sekä Javan tarjoamia ominaisuuksia.
-Tietokantaan ei ole mahdollista luoda samannimisiä asiakkaita tai paikkoja, eikä tietokantaan luoduille paketeille saa antaa samaa seurantakoodia. Samannimisiä syötteitä valvotaan SQLiten rajoitteella UNIQUE, joka varmistaa ettei samaan tauluun lisätä samannimisiä arvoja. Lisäksi SQLiten rajoitteella NOT NULL valvotaan että sarakkeisiin ei lisätä tyhjiä arvoja, tätä käytetään hyväksi esimerkiksi kun lisätään arvoja jotka viittaavat muihin sarakkeisiin, alikysely palauttaa arvon NULL jos arvoa johon viitataan ei löydy tietokannasta.
+Ohjelman tietokannan eheyttä pidetään yllä käyttämällä SQLiten sekä Javan tarjoamia ominaisuuksia. Tietokantaan ei ole mahdollista luoda samannimisiä asiakkaita tai paikkoja, eikä tietokantaan luoduille paketeille saa antaa samaa seurantakoodia.
+
+Samannimisiä syötteitä valvotaan SQLiten rajoitteella UNIQUE, joka varmistaa ettei samaan tauluun lisätä samannimisiä arvoja. Lisäksi SQLiten rajoitteella NOT NULL valvotaan että sarakkeisiin ei lisätä tyhjiä arvoja, tätä käytetään hyväksi esimerkiksi kun lisätään arvoja jotka viittaavat muihin sarakkeisiin, alikysely palauttaa arvon NULL jos arvoa johon viitataan ei löydy tietokannasta.
  
 Java-ohjelma tarkistaa käyttäjän antamat syötteet ja ilmoittaa syyn jos annettu syöte on puutteellinen, esimerkiksi jos käyttäjän syöte on tyhjä. Tietokantaan lisättäessä paketteja tai tapahtumia jotka viittaavat muualle tallennettuun tietoon, sovellus varmistaa että annetut viitteet löytyvät tietokannasta.
 

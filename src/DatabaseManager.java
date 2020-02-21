@@ -6,19 +6,16 @@ import java.util.Random;
 
 public class DatabaseManager {
 
-    // Taulukko luokat
     private final Asiakkaat asiakkaat;
     private final Paikat paikat;
     private final Paketit paketit;
     private final Tapahtumat tapahtumat;
-    // SQL
     private final String connectionName;
     private Connection db;
 
     public DatabaseManager(String database) throws SQLException {
         this.connectionName = "jdbc:sqlite:" + database;
         this.db = DriverManager.getConnection(connectionName);
-
         this.asiakkaat = new Asiakkaat(this.db);
         this.paikat = new Paikat(this.db);
         this.paketit = new Paketit(this.db);
@@ -65,7 +62,6 @@ public class DatabaseManager {
             } catch (SQLException e) {
                 System.out.println(e);
             }
-
         } else {
             System.out.println("Syöte ei saa olla tyhjä");
         }
@@ -81,24 +77,16 @@ public class DatabaseManager {
         } else {
             System.out.println("Syöte ei saa olla tyhjä");
         }
-
     }
 
     public void haePaikanTapahtumatPaivamaaralla(String paivamaara, String paikannimi) throws SQLException {
         String regex = "^((19|20)\\d\\d)-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])$";
-        int paikka_id = paikat.getPaikkaID(paikannimi);
         if (paivamaara.matches(regex)) {
-            if (paikka_id != -1) {
-                try {
-                    System.out.println("Haetaan paikan (" + paikannimi + ") tapahtumat, pvm(" + paivamaara + ").");
-                    tapahtumat.haeTapahtumatPaikasta(paivamaara, paikannimi);
-
-                } catch (SQLException e) {
-                    System.out.println(e);
-                }
-
-            } else {
-                System.out.println("Paikkaa ei löytynyt");
+            try {
+                tapahtumat.haeTapahtumatPaikasta(paivamaara, paikannimi);
+            } catch (SQLException e) {
+                System.out.println("Ongelma haettaessa tapahtumia päivämäärällä");
+                System.out.println(e);
             }
         } else {
             System.out.println("Tarkista että päivämäärä on oikein ja muodossa 'YYYY-MM-DD'");
@@ -110,14 +98,15 @@ public class DatabaseManager {
         this.db = DriverManager.getConnection("jdbc:sqlite:tehokkuus.db");
         createTables();
         Statement s = db.createStatement();
-        db.setAutoCommit(false);
+        // db.setAutoCommit(false);
         Random rand = new Random(1137);
 
-        //Tehokkuus testi
         System.out.println("");
         System.out.println("Tehokkuustesti: ");
         System.out.println("");
+
         try {
+            s.execute("BEGIN TRANSACTION");
 
             // 1. Asiakkaiden lisäys
             long t1 = System.nanoTime();
@@ -151,13 +140,17 @@ public class DatabaseManager {
 
             // 4. Tapahtumien lisäys
             for (int i = 1; i < 1000001; i++) {
-                PreparedStatement p = db.prepareStatement("INSERT INTO Tapahtumat (paikka_id,paketti_id,date,kuvaus) VALUES (?,?,datetime(),'testi')");
+                // PreparedStatement p = db.prepareStatement("INSERT INTO Tapahtumat (paikka_id,paketti_id,date,kuvaus) VALUES (?,?,datetime(),'testi')");
+                PreparedStatement p = db.prepareStatement("INSERT INTO Tapahtumat (paikka_id,paketti_id,date,kuvaus) VALUES ((SELECT id FROM Paikat WHERE paikannimi = ?),(SELECT id FROM Paketit WHERE seurantakoodi = ?),datetime(),?)");
                 int j = rand.nextInt(1000) + 1;
-                p.setInt(1, j);
-                p.setInt(2, j);
-                p.execute();
+                p.setString(1, ("P" + j));
+                p.setString(2, ("koodi" + j));
+                p.setString(3, ("testi" + i));
+                p.executeUpdate();
 
             }
+
+            s.execute("COMMIT");
             long t5 = System.nanoTime();
             System.out.println("Lisätty 1000 000 tapahtumaa ja pakettia ajassa: " + (t5 - t4) / 1e9 + "s.");
 
@@ -169,7 +162,8 @@ public class DatabaseManager {
             }
             long t6 = System.nanoTime();
             System.out.println("Haettu 1000 asiakkaan pakettien määrä ajassa: " + (t6 - t5) / 1e9 + "s.");
-            s.execute("CREATE INDEX idx_paketti ON Tapahtumat (paketti_id)");
+
+            s.execute("CREATE INDEX idx_paketti ON Tapahtumat(paketti_id)");
 
             // 6. Paketin tapahtumien määrä
             for (int i = 1; i < 1001; i++) {
@@ -182,15 +176,16 @@ public class DatabaseManager {
             System.out.println("Haettu 1000 paketin tapahtumien määrä ajassa: " + (t7 - t6) / 1e9 + "s.");
 
         } catch (SQLException e) {
+            System.out.println("Ongelma tehokuustestissä");
             System.out.println(e);
         }
-        if (!poistetaan) {
+
+        /*if (!poistetaan) {
             db.commit();
         } else {
             db.rollback();
-        }
-
-        // Sulkee yhteyden tehokkuustesti-tietokantaan ja ottaa yhteyden alkuperäiseen tietokantaan
+        } */
+        // Pudottaa yhteyden testi tietokantaan ja ottaa yhteyden alkuperäiseen tietokantaan
         this.db.close();
         this.db = DriverManager.getConnection(connectionName);
         db.setAutoCommit(true);
@@ -204,6 +199,7 @@ public class DatabaseManager {
 
         } catch (SQLException e) {
             System.out.println("Löytyi taulukko 'Asiakkaat'");
+            System.out.println(e);
         }
         try {
             s.execute("CREATE TABLE Paikat (id INTEGER PRIMARY KEY, paikannimi TEXT NOT NULL UNIQUE)");
@@ -211,6 +207,7 @@ public class DatabaseManager {
 
         } catch (SQLException e) {
             System.out.println("Löytyi taulukko 'Paikat'");
+            System.out.println(e);
         }
         try {
             s.execute("CREATE TABLE Paketit (id INTEGER PRIMARY KEY, asiakas_id INTEGER NOT NULL, seurantakoodi TEXT NOT NULL UNIQUE)");
@@ -218,13 +215,14 @@ public class DatabaseManager {
 
         } catch (SQLException e) {
             System.out.println("Löytyi taulukko 'Paketit'");
+            System.out.println(e);
         }
         try {
-            s.execute("CREATE TABLE Tapahtumat (id INTEGER PRIMARY KEY, paikka_id INTEGER NOT NULL, paketti_id INTEGER NOT NULL, date DATETIME, kuvaus TEXT NOT NULL)");
+            s.execute("CREATE TABLE Tapahtumat (id INTEGER PRIMARY KEY, paikka_id INTEGER NOT NULL, paketti_id INTEGER NOT NULL, date DATETIME NOT NULL, kuvaus TEXT NOT NULL)");
             System.out.println("Luotu taulukko 'Tapahtumat'");
-
         } catch (SQLException e) {
             System.out.println("Löytyi taulukko 'Tapahtumat'");
+            System.out.println(e);
         }
         System.out.println("Tietokanta valmis.");
 

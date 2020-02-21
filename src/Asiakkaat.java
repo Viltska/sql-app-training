@@ -16,29 +16,9 @@ public class Asiakkaat {
             p.executeUpdate();
             System.out.println("Asiakas lisätty");
         } catch (SQLException e) {
+            System.out.println("Asiakasta ei voitu lisätä");
             System.out.println(e);
         }
-    }
-
-    public int getID(String asiakas) throws SQLException {
-        try {
-            PreparedStatement p = db.prepareStatement("SELECT id FROM Asiakkaat WHERE nimi = ?");
-            p.setString(1, asiakas);
-
-            ResultSet r = p.executeQuery();
-
-            if (r.next()) {
-                return r.getInt("id");
-
-            } else {
-                return -1;
-            }
-        } catch (SQLException e) {
-            System.out.println("Ongelma metodissa 'Asiakas.getID'");
-            System.out.println(e);
-        }
-        return -1;
-
     }
 
     public void haeAsiakkaanPaketit(String asiakas) throws SQLException {
@@ -62,6 +42,7 @@ public class Asiakkaat {
                 } while (r.next());
             }
         } catch (SQLException e) {
+            System.out.println("Ongelma haettaessa asiakkaan paketteja");
             System.out.println(e);
         }
 

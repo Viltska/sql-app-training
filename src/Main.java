@@ -7,12 +7,12 @@ public class Main {
     public static void main(String[] args) throws SQLException {
         Scanner lukija = new Scanner(System.in);
         String databaseName = "tikape.db";
-        System.out.println("Current database: " + databaseName);
         DatabaseManager manager = new DatabaseManager(databaseName);
 
-        //Komentorivi ohjelma
-        System.out.println("Komennot:");
+        System.out.println("Tervetuloa!");
+        System.out.println("Nykyinen tietokanta: " + databaseName);
         System.out.println("");
+        System.out.println("Komennot:");
         System.out.println("1: Lisää asiakas ");
         System.out.println("2: Lisää paikka ");
         System.out.println("3: Lisää paketti");
@@ -23,11 +23,13 @@ public class Main {
         System.out.println("8: Tehokkuus testi");
         System.out.println("9: Luo tietokannan ja/tai puuttuvat taulukot");
         System.out.println("0: Lopettaa ohjelman");
-        System.out.println("");
 
         while (true) {
+
+            System.out.println("");
             System.out.print("Syötä komento (0-9): ");
             String komento = lukija.nextLine();
+
             if (komento.equals("0")) {
                 manager.tikapePrint();
                 System.out.println("Ohjelma suljetaan.");
@@ -37,15 +39,12 @@ public class Main {
                 System.out.print("Syötä nimi: ");
                 String nimi = lukija.nextLine();
                 manager.uusiAsiakas(nimi);
-
             }
             if (komento.equals("2")) {
                 System.out.print("Syötä paikannimi: ");
                 String paikka = lukija.nextLine();
                 manager.uusiPaikka(paikka);
-
             }
-
             if (komento.equals("3")) {
                 System.out.print("Syötä paketin asiakas: ");
                 String asiakas = lukija.nextLine();
@@ -62,7 +61,6 @@ public class Main {
                 System.out.print("Syötä tapahtuman kuvaus: ");
                 String kuvaus = lukija.nextLine();
                 manager.uusiTapahtuma(paikka, seurantaKoodi, kuvaus);
-
             }
             if (komento.equals("5")) {
                 System.out.print("Syötä paketin seurantakoodi: ");
@@ -83,18 +81,18 @@ public class Main {
                 manager.haePaikanTapahtumatPaivamaaralla(pvm, paikannimi);
             }
             if (komento.equals("8")) {
-                System.out.print("Tallennetaanko testin aikana tehdyt muutokset taulukkoon? (Y/N): ");
+                /* System.out.print("Tallennetaanko testin aikana tehdyt muutokset taulukkoon? (Y/N): ");
                 String yesno = lukija.nextLine();
                 boolean poistetaan = false;
                 if (yesno.equals("N") || yesno.equals("n")) {
                     poistetaan = true;
-                }
-                manager.tehokkuusTesti(poistetaan);
+                } */
+                manager.tehokkuusTesti(false);
             }
-
             if (komento.equals("9")) {
                 System.out.println("Tarkistetaan tietokantaa..");
                 manager.createTables();
+                
             }
         }
     }

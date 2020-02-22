@@ -66,11 +66,12 @@ Harjoitustyön raportti}
 \tableofcontents
 \newpage
 \section{Esittely}
-Harjoitustyö on moniluokkainen komentoriviohjelma jonka avulla voidaan tallentaa asiakkaita, paikkoja, paketteja ja niihin liittyviä tapahtumia tietokantaan. Tietokantaan voidaan suorittaa ennakkoon määriteltyjä kyselyita, kyselyiden tulokset tulostetaan käyttäjän komentoriville. Ohjelmaan tallennetut tiedot jäävät muistiin tietokantaan ohjelman sulkemisen jälkeen.
 
-Ohjelmointikielenä on Java ja ohjelmointiympäristönä on käyetty NetBeans ympäristöä.
+\subsection{Tavoite}
+Harjoitustyön tavoitteena on luoda esimerkkisovellus tietokannan käytöstä sovelluksessa.
+Harjoitustyön sovelluksen ohjelmointi on toteutettu Java kielellä käyttäen NetBeans kehitysympäristöä. Ohjelman tietokantaa pitää yllä SQLite ja sitä tukeva ajuri.
 
-\subsection*{Ohjelman ominaisuudet}
+\subsection{Ohjelman ominaisuudet}
 Ohjelmalla on seuraavat ominaisuudet.
 \begin{itemize}
 \item Tietokannan luominen kun tietokanta puuttuu tai on puutteellinen.
@@ -84,8 +85,8 @@ Ohjelmalla on seuraavat ominaisuudet.
 \item Tehokkuustestin suorittaminen.
 \end{itemize}
 \newpage
-\subsection*{Komentorivi komennot}
-Ohjelmalle annetaan syöttämällä komentoriville komentoa kuvaava numero(0-9).
+\subsection{Komentorivi komennot}
+Ohjelmalle voidaan antaa komentoja syöttmällä komentoa kuvaava numero komentoriville. Ohjelmalla on seuraavat, numeroidut komennot.
 \begin{description}
 \item \textbf{1} lisää uuden asiakkaan tietokantaan.
 \item \textbf{2} lisää uuden paikan tietokantaan.
@@ -101,22 +102,53 @@ Ohjelmalle annetaan syöttämällä komentoriville komentoa kuvaava numero(0-9).
 
 \newpage
 \section{Kaaviot ja Skeemat}
-\subsection*{Tietokantakaavio}
+\subsection{Tietokantakaavio}
+\begin{left}
+\includegraphics[scale=0.25]{tietokanta_kaavio.png} 
+\end{left}
 
-\subsection*{SQL-skeema}
+\subsection{SQL-skeema}
+\lstset{frame=none,
+  language=SQL,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{amber},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+\begin{lstlisting}
 
+CREATE TABLE Asiakkaat (id INTEGER PRIMARY KEY, nimi TEXT NOT NULL UNIQUE);
+
+CREATE TABLE Paikat (id INTEGER PRIMARY KEY, paikannimi TEXT NOT NULL UNIQUE);
+
+CREATE TABLE Paketit (id INTEGER PRIMARY KEY, asiakas_id INTEGER NOT NULL, seurantakoodi TEXT NOT NULL UNIQUE);
+
+CREATE TABLE Tapahtumat (id INTEGER PRIMARY KEY, paikka_id INTEGER NOT NULL, paketti_id INTEGER NOT NULL, date DATETIME NOT NULL, kuvaus TEXT NOT NULL);
+\end{lstlisting}
 \newpage
+
 \section{Tehokkuustesti}
+
+\subsection{Testin vaiheet}
 Ohjelmalla voidaan suorittaa tehokkuustesti jonka avulla voidaan testata tietokannan tehokkuutta. Tehokkuustesti suorittaa ennalta määriteltyjä muutoksia tietokantaan ja tulostaa testeihin käytetyn ajan. Tehokkuustesti luo uuden tietokannan johon testin aikana luodut arvot tallennetaan, testin jälkeen ohjelma palaa käyttämään vanhaa tietokantaa.
 
 Testi koostuu kuudesta eri vaiheesta, testin vaiheissa yhdestä neljään tietokantaan lisätään tuhat asiakasta, paikkaa ja pakettia. Seuraavaksi tietokantaan lisätään miljoona tapahtumaa käyttäen satunnaisesti tietokantaan lisättyjä arvoja. Ohjelmaa testatessa tuhannen arvon lisääminen tapahtui alle sekunnin kymmenesosassa kun taas miljoonaa arvoa lisätessä aikaa kului 10-12 sekunttia, tästä nähdään että ohjelman tehokkuuteen vaikuttaa merkittävästi tietokantaan lisättävien arvojen määrä.
 
 Viimeisissä vaiheissa viisi ja kuusi testi suorittaa kyselyitä joissa haetaan tuhannen asiakkaan pakettien määrä, sekä tuhannen paketin tapahtumien määrä. Mainituissa vaiheissa testin tehokkuuteen vaikutti eniten indeksien käyttö.
 
-\subsection*{Ilman indeksiä}
+\subsection{Ilman indeksiä}
 Ilman lisättyä indeksiä pakettien hakemiseen tietokannasta aikaa kului alle sekunnin, mutta tapahtumia haettaessa aikaa kuluikin yli minuutin. Tarkastelun jälkeen huomataan että tapahtumaa haettaessa SQLite suorittaa alikyselyn jokaisen tapahtuman kohdalla. Mainittu alikysely etsii paketit taulukosta nimellä haluttua pakettia, tämä käsittely hidastaa kyselyä merkittävästi.
 
-\subsection*{Indeksin lisäämisen jälkeen}
+\subsection{Indeksin lisäämisen jälkeen}
 Tehokkuuden lisäämiseksi voidaan paketin arvolle nimi luoda hakemistorakenne paketin nimelle. Käyttämällä SQLiten CREATE INDEX toimintoa, indeksin lisäämisen jälkeen tapahtuma kysely hakee nimellä paketin id-numeron tehokkaasti. Indeksin lisäämisen jälkeen tapahtuma kysely vei aikaa noin sekunnin.
 
 \newpage
@@ -125,23 +157,43 @@ Ohjelman tietokannan eheyttä pidetään yllä käyttämällä SQLiten sekä Jav
 
 Samannimisiä syötteitä valvotaan SQLiten rajoitteella UNIQUE, joka varmistaa ettei samaan tauluun lisätä samannimisiä arvoja. Lisäksi SQLiten rajoitteella NOT NULL valvotaan että sarakkeisiin ei lisätä tyhjiä arvoja, tätä käytetään hyväksi esimerkiksi kun lisätään arvoja jotka viittaavat muihin sarakkeisiin, alikysely palauttaa arvon NULL jos arvoa johon viitataan ei löydy tietokannasta.
  
-Java-ohjelma tarkistaa käyttäjän antamat syötteet ja ilmoittaa syyn jos annettu syöte on puutteellinen, esimerkiksi jos käyttäjän syöte on tyhjä. Tietokantaan lisättäessä paketteja tai tapahtumia jotka viittaavat muualle tallennettuun tietoon, sovellus varmistaa että annetut viitteet löytyvät tietokannasta.
+Ohjelma tarkistaa käyttäjän antamat syötteet ja hylkää syötteet jotka eivät kelpaa ohjelmalle. Tietokantaan lisättäessä paketteja tai tapahtumia jotka viittaavat toiseen taulukkoon tallennettuun tietoon, sovellus varmistaa että viitatut tiedot löytyvät tietokannassa.
+
+Tapauksissa joissa ohjelmalle syötetään arvo jota se ei kelpuuta ohjelma tulostaa käyttäjälle virheilmoituksen ja jatkaa ohjelman suorittamista. Virheilmoitukset kertovat käyttäjälle miksi annettu syöte ei kelvannut. Tapauksissa joissa SQLite antaa virheilmoituksen tulostetaan myös tämä käyttäjälle. 
 
 \newpage
 \section{Lähdekoodi}
-%Tarkista lstinputlisting polut
-\textbf{https://github.com/Viltska/sql-app-training}.
+
+\subsection*{Esittely}
+Seuraavasta kappaleesta löytyy ohjelman lähdekoodi, sekä lyhyt esittely ohjelman rakenteesta:
+
+Ohjelma koostuu kuudesta luokasta, luokka Main suorittaa komentorivisovellusta ja kutsuu luokkaa DatabaseManager joka suorittaa muutoksia tietokantaan. Luokka DatabaseManager pitää yllä tietokanna taulukoita joista jokaisella on oma luokkansa. Ohjelman lähdekoodi ja raportti löytyvät myös alla olevasta osoitteesta.
+
+\begin{center}
+\textbf{https://github.com/Viltska/sql-app-training}
+\end{center}
+\newpage
 
 \subsection*{Main.java}
 \lstinputlisting[language=Java]{E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Main.java}
+\newpage
+
 \subsection*{DatabaseManager.java}
 \lstinputlisting[language=Java]{E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/DatabaseManager.java}
+\newpage
+
 \subsection*{Asiakkaat.java}
 \lstinputlisting[language=Java]{E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Asiakkaat.java}
+\newpage
+
 \subsection*{Paikat.java}
 \lstinputlisting[language=Java]{E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Paikat.java}
+\newpage
+
 \subsection*{Paketit.java}
 \lstinputlisting[language=Java]{E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Paketit.java}
+\newpage
+
 \subsection*{Tapahtumat.java}
 \lstinputlisting[language=Java]{E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Tapahtumat.java}
 \end{document}

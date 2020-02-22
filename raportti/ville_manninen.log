@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2020.1.21)  22 FEB 2020 16:07
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2020.1.21)  22 FEB 2020 16:12
 entering extended mode
 **./ville_manninen.tex
 (ville_manninen.tex
@@ -479,63 +479,21 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 
  [2]
 [3] [4]
-! Missing $ inserted.
-<inserted text> 
-                $
-l.106 \begin{left}
-                  
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing delimiter (. inserted).
-<to be read again> 
-                   \unhbox 
-l.107 \includegraphics
-                      [scale=0.25]{tietokanta_kaavio.png}
-I was expecting to see something like `(' or `\{' or
-`\}' here. If you typed, e.g., `{' instead of `\{', you
-should probably delete the `{' by typing `1' now, so that
-braces don't get unbalanced. Otherwise just proceed.
-Acceptable delimiters are characters whose \delcode is
-nonnegative, or you can use `\delimiter <delimiter code>'.
-
 <tietokanta_kaavio.png, id=26, 1552.80125pt x 864.22874pt>
 File: tietokanta_kaavio.png Graphic file (type png)
 <use tietokanta_kaavio.png>
-Package pdftex.def Info: tietokanta_kaavio.png  used on input line 107.
+Package pdftex.def Info: tietokanta_kaavio.png  used on input line 106.
 (pdftex.def)             Requested size: 388.19936pt x 216.05666pt.
-! Missing \right. inserted.
-<inserted text> 
-                \right .
-l.108 \end{left}
-                
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.108 \end{left}
-                
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-
-Overfull \hbox (30.59935pt too wide) in paragraph at lines 106--109
-$[]$ 
+Overfull \hbox (28.19936pt too wide) in paragraph at lines 106--107
+[] 
  []
 
 ("C:\Program Files\MiKTeX 2.9\tex/latex/listings\lstlang1.sty"
 File: lstlang1.sty 2019/09/10 1.8c listings language file
 )
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 1
-27.
+25.
 
 ("C:\Program Files\MiKTeX 2.9\tex/latex/lm\t1lmtt.fd"
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
@@ -565,10 +523,10 @@ Overfull \hbox (71.54854pt too wide) in paragraph at lines 258--259
 ("E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Tapahtumat.java"
 [24]) [25] (ville_manninen.aux) ) 
 Here is how much of TeX's memory you used:
- 5689 strings out of 492482
- 77893 string characters out of 3130996
+ 5688 strings out of 492482
+ 77886 string characters out of 3130996
  388101 words of memory out of 3000000
- 9908 multiletter control sequences out of 15000+200000
+ 9907 multiletter control sequences out of 15000+200000
  60912 words of font info for 50 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  30i,11n,40p,552b,1842s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -581,7 +539,7 @@ ublic/lm/lmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmr12.pfb
 /MiKTeX 2.9/fonts/type1/public/lm/lmr6.pfb><C:/Program Files/MiKTeX 2.9/fonts/t
 ype1/public/lm/lmr8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmr9
 .pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmtt10.pfb>
-Output written on ville_manninen.pdf (25 pages, 360230 bytes).
+Output written on ville_manninen.pdf (25 pages, 360246 bytes).
 PDF statistics:
  129 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

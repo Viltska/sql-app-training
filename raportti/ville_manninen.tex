@@ -103,9 +103,7 @@ Ohjelmalle voidaan antaa komentoja syöttmällä komentoa kuvaava numero komento
 \newpage
 \section{Kaaviot ja Skeemat}
 \subsection{Tietokantakaavio}
-\begin{left}
 \includegraphics[scale=0.25]{tietokanta_kaavio.png} 
-\end{left}
 
 \subsection{SQL-skeema}
 \lstset{frame=none,
@@ -167,7 +165,7 @@ Tapauksissa joissa ohjelmalle syötetään arvo jota se ei kelpuuta ohjelma tulo
 \subsection*{Esittely}
 Seuraavasta kappaleesta löytyy ohjelman lähdekoodi, sekä lyhyt esittely ohjelman rakenteesta:
 
-Ohjelma koostuu kuudesta luokasta, luokka Main suorittaa komentorivisovellusta ja kutsuu luokkaa DatabaseManager joka suorittaa muutoksia tietokantaan. Luokka DatabaseManager pitää yllä tietokanna taulukoita joista jokaisella on oma luokkansa. Ohjelman lähdekoodi ja raportti löytyvät myös alla olevasta osoitteesta.
+Ohjelma koostuu kuudesta luokasta, luokka Main suorittaa komentorivisovellusta, kun tehdään muutoksia tietokantaan kutsutaan luokkaa DatabaseManager. DatabaseManager luokka luo ja muokkaa tietokanna taulukoita joista jokaisella on oma luokkansa. Ohjelman lähdekoodi ja raportti löytyvät myös alla olevasta osoitteesta.
 
 \begin{center}
 \textbf{https://github.com/Viltska/sql-app-training}

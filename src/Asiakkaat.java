@@ -45,7 +45,5 @@ public class Asiakkaat {
             System.out.println("Ongelma haettaessa asiakkaan paketteja");
             System.out.println(e);
         }
-
     }
-
 }

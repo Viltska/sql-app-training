@@ -139,9 +139,12 @@ CREATE TABLE Tapahtumat (id INTEGER PRIMARY KEY, paikka_id INTEGER NOT NULL, pak
 \subsection{Testin vaiheet}
 Ohjelmalla voidaan suorittaa tehokkuustesti jonka avulla voidaan testata tietokannan tehokkuutta. Tehokkuustesti suorittaa ennalta määriteltyjä muutoksia tietokantaan ja tulostaa testeihin käytetyn ajan. Tehokkuustesti luo uuden tietokannan johon testin aikana luodut arvot tallennetaan, testin jälkeen ohjelma palaa käyttämään vanhaa tietokantaa.
 
-Testi koostuu kuudesta eri vaiheesta, testin vaiheissa yhdestä neljään tietokantaan lisätään tuhat asiakasta, paikkaa ja pakettia. Seuraavaksi tietokantaan lisätään miljoona tapahtumaa käyttäen satunnaisesti tietokantaan lisättyjä arvoja. Ohjelmaa testatessa tuhannen arvon lisääminen tapahtui alle sekunnin kymmenesosassa kun taas miljoonaa arvoa lisätessä aikaa kului 10-12 sekunttia, tästä nähdään että ohjelman tehokkuuteen vaikuttaa merkittävästi tietokantaan lisättävien arvojen määrä.
+Testi koostuu kuudesta eri vaiheesta, testin vaiheissa yhdestä neljään tietokantaan lisätään tuhat asiakasta, paikkaa ja pakettia. Seuraavaksi tietokantaan lisätään miljoona tapahtumaa käyttäen satunnaisesti tietokantaan lisättyjä arvoja. Ohjelmaa testatessa tuhannen arvon lisääminen tapahtui alle sekunnin kymmenesosassa kun taas miljoonaa arvoa lisätessä aikaa kului noin minuutti, tästä nähdään että ohjelman tehokkuuteen vaikuttaa merkittävästi tietokantaan lisättävien arvojen määrä. 
 
 Viimeisissä vaiheissa viisi ja kuusi testi suorittaa kyselyitä joissa haetaan tuhannen asiakkaan pakettien määrä, sekä tuhannen paketin tapahtumien määrä. Mainituissa vaiheissa testin tehokkuuteen vaikutti eniten indeksien käyttö.
+
+\subsection{Alikyselyn vaikutus tehokkuutten}
+
 
 \subsection{Ilman indeksiä}
 Ilman lisättyä indeksiä pakettien hakemiseen tietokannasta aikaa kului alle sekunnin, mutta tapahtumia haettaessa aikaa kuluikin yli minuutin. Tarkastelun jälkeen huomataan että tapahtumaa haettaessa SQLite suorittaa alikyselyn jokaisen tapahtuman kohdalla. Mainittu alikysely etsii paketit taulukosta nimellä haluttua pakettia, tämä käsittely hidastaa kyselyä merkittävästi.
@@ -173,25 +176,25 @@ Ohjelma koostuu kuudesta luokasta, luokka Main suorittaa komentorivisovellusta, 
 \newpage
 
 \subsection*{Main.java}
-\lstinputlisting[language=Java]{E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Main.java}
+% \lstinputlisting[language=Java]{E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Main.java}
 \newpage
 
 \subsection*{DatabaseManager.java}
-\lstinputlisting[language=Java]{E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/DatabaseManager.java}
+% \lstinputlisting[language=Java]{E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/DatabaseManager.java}
 \newpage
 
 \subsection*{Asiakkaat.java}
-\lstinputlisting[language=Java]{E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Asiakkaat.java}
+% \lstinputlisting[language=Java]{E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Asiakkaat.java}
 \newpage
 
 \subsection*{Paikat.java}
-\lstinputlisting[language=Java]{E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Paikat.java}
+% \lstinputlisting[language=Java]{E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Paikat.java}
 \newpage
 
 \subsection*{Paketit.java}
-\lstinputlisting[language=Java]{E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Paketit.java}
+% \lstinputlisting[language=Java]{E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Paketit.java}
 \newpage
 
 \subsection*{Tapahtumat.java}
-\lstinputlisting[language=Java]{E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Tapahtumat.java}
+% \lstinputlisting[language=Java]{E:/Koulu/Tietokantojen Perusteet/sql-app-training/src/Tapahtumat.java}
 \end{document}

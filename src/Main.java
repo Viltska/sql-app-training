@@ -25,7 +25,6 @@ public class Main {
         System.out.println("0: Lopettaa ohjelman");
 
         while (true) {
-
             System.out.println("");
             System.out.print("Syötä komento (0-9): ");
             String komento = lukija.nextLine();
@@ -50,7 +49,6 @@ public class Main {
                 String asiakas = lukija.nextLine();
                 System.out.print("Syötä paketin seurantakoodi: ");
                 String koodi = lukija.nextLine();
-
                 manager.uusiPaketti(asiakas, koodi);
             }
             if (komento.equals("4")) {
@@ -81,18 +79,11 @@ public class Main {
                 manager.haePaikanTapahtumatPaivamaaralla(pvm, paikannimi);
             }
             if (komento.equals("8")) {
-                /* System.out.print("Tallennetaanko testin aikana tehdyt muutokset taulukkoon? (Y/N): ");
-                String yesno = lukija.nextLine();
-                boolean poistetaan = false;
-                if (yesno.equals("N") || yesno.equals("n")) {
-                    poistetaan = true;
-                } */
-                manager.tehokkuusTesti(false);
+                manager.tehokkuusTesti();
             }
             if (komento.equals("9")) {
                 System.out.println("Tarkistetaan tietokantaa..");
-                manager.createTables();
-                
+                manager.createTables();   
             }
         }
     }

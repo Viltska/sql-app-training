@@ -161,7 +161,6 @@ public class DatabaseManager {
                 p.setString(1, ("koodi" + j));
                 ResultSet r = p.executeQuery();
             }
-            System.out.println("");
             long t7 = System.nanoTime();
             System.out.println("Haettu 1000 paketin tapahtumien määrä ajassa: " + (t7 - t6) / 1e9 + "s.");
 
@@ -169,6 +168,7 @@ public class DatabaseManager {
             System.out.println("Ongelma tehokuustestissä");
             System.out.println(e);
         }
+        System.out.println("");
         System.out.println("Tehokkuustesti valmis");
         this.db.close();
         this.db = DriverManager.getConnection(connectionName);
